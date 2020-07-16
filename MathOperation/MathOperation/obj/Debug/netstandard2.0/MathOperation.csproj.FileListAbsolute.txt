@@ -1,0 +1,14 @@
+C:\Users\s4eka\source\repos\MathOperation\MathOperation\MathOperation\bin\Debug\netstandard2.0\MathOperation.deps.json
+C:\Users\s4eka\source\repos\MathOperation\MathOperation\MathOperation\bin\Debug\netstandard2.0\MathOperation.dll
+C:\Users\s4eka\source\repos\MathOperation\MathOperation\MathOperation\bin\Debug\netstandard2.0\ref\MathOperation.dll
+C:\Users\s4eka\source\repos\MathOperation\MathOperation\MathOperation\bin\Debug\netstandard2.0\MathOperation.pdb
+C:\Users\s4eka\source\repos\MathOperation\MathOperation\MathOperation\obj\Debug\netstandard2.0\App.xaml.g.cs
+C:\Users\s4eka\source\repos\MathOperation\MathOperation\MathOperation\obj\Debug\netstandard2.0\MainPage.xaml.g.cs
+C:\Users\s4eka\source\repos\MathOperation\MathOperation\MathOperation\obj\Debug\netstandard2.0\MathOperation.AssemblyInfoInputs.cache
+C:\Users\s4eka\source\repos\MathOperation\MathOperation\MathOperation\obj\Debug\netstandard2.0\MathOperation.AssemblyInfo.cs
+C:\Users\s4eka\source\repos\MathOperation\MathOperation\MathOperation\obj\Debug\netstandard2.0\MathOperation.csproj.CoreCompileInputs.cache
+C:\Users\s4eka\source\repos\MathOperation\MathOperation\MathOperation\obj\Debug\netstandard2.0\XamlC.stamp
+C:\Users\s4eka\source\repos\MathOperation\MathOperation\MathOperation\obj\Debug\netstandard2.0\MathOperation.dll
+C:\Users\s4eka\source\repos\MathOperation\MathOperation\MathOperation\obj\Debug\netstandard2.0\ref\MathOperation.dll
+C:\Users\s4eka\source\repos\MathOperation\MathOperation\MathOperation\obj\Debug\netstandard2.0\MathOperation.pdb
+C:\Users\s4eka\source\repos\MathOperation\MathOperation\MathOperation\obj\Debug\netstandard2.0\MathOperation.csprojAssemblyReference.cache
