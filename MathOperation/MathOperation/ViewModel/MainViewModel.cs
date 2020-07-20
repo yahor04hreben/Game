@@ -26,10 +26,10 @@ namespace MathOperation.ViewModel
             GenerateListButton?.Invoke(list, eventArgs);
         }
 
-        public MainViewModel()
+        public MainViewModel(int number)
         {
             TableViewModel = new TableViewModel();
-            Randomizer = new Randomizer(TableViewModel.GetCellCount, 30);
+            Randomizer = new Randomizer(TableViewModel.GetCellCount, number);
             TableViewModel.FillTable(Randomizer.MassRandNumbers.ToList());
             GoalViewModel = new CellViewModel { Number = Randomizer.Goal, Size = StaticResources.GoalTextSize};
             AddCellViewModel = new AddCellViewModel() { IsClickable = false, ColorClickable = StaticResources.AddCellUnClickable};
@@ -39,9 +39,9 @@ namespace MathOperation.ViewModel
             TableViewModel.CheckGoalValue += CheckGoalValue;
         }
 
-        public void ReFillTable()
+        public void ReFillTable(int from, int to)
         {
-            int goal = Randomizer.GenerateRandNumber(50, 30);
+            int goal = Randomizer.GenerateRandNumber(to, from);
             Randomizer.Goal = goal;
             GoalViewModel.Number = goal;
             Randomizer.FillListOfRandNumber();

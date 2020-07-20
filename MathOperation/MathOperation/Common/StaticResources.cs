@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
+using Xamarin.Essentials;
 
 namespace MathOperation.Common
 {
@@ -18,8 +19,11 @@ namespace MathOperation.Common
 
         public static Color GoalBackgroundColor => Color.FromArgb(247, 95, 30);
         public static int MarginGoal => 5;
-        public static int RadiusGoal => 20;
+        public static int RadiusGoal => 10;
 
         public static Color ColorGoalText => Color.White;
+
+        public static float Width => (float)(DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density);
+        public static float Height => (float)(DeviceDisplay.MainDisplayInfo.Height / DeviceDisplay.MainDisplayInfo.Density);
     }
 }

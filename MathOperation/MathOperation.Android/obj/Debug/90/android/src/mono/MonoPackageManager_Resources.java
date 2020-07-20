@@ -3,6 +3,7 @@ public class MonoPackageManager_Resources {
 	public static String[] Assemblies = new String[]{
 		/* We need to ensure that "MathOperation.Android.dll" comes first in this list. */
 		"MathOperation.Android.dll",
+		"FluentValidation.dll",
 		"FormsViewGroup.dll",
 		"MathOperation.dll",
 		"Xamarin.Android.Arch.Core.Common.dll",

@@ -11,7 +11,7 @@ namespace MathOperation
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new MainPage());
+            MainPage = new NavigationPage(new MainPage(string.Empty, string.Empty));
         }
 
         protected override void OnStart()

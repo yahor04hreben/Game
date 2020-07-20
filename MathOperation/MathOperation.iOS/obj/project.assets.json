@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     "Xamarin.iOS,Version=v1.0": {
+      "FluentValidation/9.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/FluentValidation.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/FluentValidation.dll": {}
+        }
+      },
       "System.Numerics.Vectors/4.5.0": {
         "type": "package",
         "compile": {
@@ -151,8 +160,9 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
+          "FluentValidation": "9.0.1",
           "Xamarin.Essentials": "1.3.1",
-          "Xamarin.Forms": "4.5.0.495"
+          "Xamarin.Forms": "4.7.0.1142"
         },
         "compile": {
           "bin/placeholder/MathOperation.dll": {}
@@ -163,6 +173,15 @@
       }
     },
     "Xamarin.iOS,Version=v1.0/win": {
+      "FluentValidation/9.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/FluentValidation.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/FluentValidation.dll": {}
+        }
+      },
       "System.Numerics.Vectors/4.5.0": {
         "type": "package",
         "compile": {
@@ -312,8 +331,9 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
+          "FluentValidation": "9.0.1",
           "Xamarin.Essentials": "1.3.1",
-          "Xamarin.Forms": "4.5.0.495"
+          "Xamarin.Forms": "4.7.0.1142"
         },
         "compile": {
           "bin/placeholder/MathOperation.dll": {}
@@ -324,6 +344,15 @@
       }
     },
     "Xamarin.iOS,Version=v1.0/win-x64": {
+      "FluentValidation/9.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/FluentValidation.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/FluentValidation.dll": {}
+        }
+      },
       "System.Numerics.Vectors/4.5.0": {
         "type": "package",
         "compile": {
@@ -473,8 +502,9 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
+          "FluentValidation": "9.0.1",
           "Xamarin.Essentials": "1.3.1",
-          "Xamarin.Forms": "4.5.0.495"
+          "Xamarin.Forms": "4.7.0.1142"
         },
         "compile": {
           "bin/placeholder/MathOperation.dll": {}
@@ -485,6 +515,15 @@
       }
     },
     "Xamarin.iOS,Version=v1.0/win-x86": {
+      "FluentValidation/9.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/FluentValidation.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/FluentValidation.dll": {}
+        }
+      },
       "System.Numerics.Vectors/4.5.0": {
         "type": "package",
         "compile": {
@@ -634,8 +673,9 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
+          "FluentValidation": "9.0.1",
           "Xamarin.Essentials": "1.3.1",
-          "Xamarin.Forms": "4.5.0.495"
+          "Xamarin.Forms": "4.7.0.1142"
         },
         "compile": {
           "bin/placeholder/MathOperation.dll": {}
@@ -647,6 +687,21 @@
     }
   },
   "libraries": {
+    "FluentValidation/9.0.1": {
+      "sha512": "GeF+cPknUFFJ5FkCybmQShaXWwJowBuJozgns6In37wiP2zOWx+kdNPBAN9BlDyhcORdxtXeGnkLZ+OFT85onQ==",
+      "type": "package",
+      "path": "fluentvalidation/9.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "fluentvalidation.9.0.1.nupkg.sha512",
+        "fluentvalidation.nuspec",
+        "lib/net461/FluentValidation.dll",
+        "lib/net461/FluentValidation.xml",
+        "lib/netstandard2.0/FluentValidation.dll",
+        "lib/netstandard2.0/FluentValidation.xml"
+      ]
+    },
     "System.Numerics.Vectors/4.5.0": {
       "sha512": "QQTlPTl06J/iiDbJCiepZ4H//BVraReU4O4EoRw1U02H5TLUIT7xn3GnDp9AXPSlJUDyFs4uWjWafNX6WrAojQ==",
       "type": "package",
@@ -1045,24 +1100,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\s4eka\\.nuget\\packages\\": {},
+    "C:\\Users\\by_yhreben\\.nuget\\packages\\": {},
     "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\s4eka\\source\\repos\\MathOperation\\MathOperation\\MathOperation.iOS\\MathOperation.iOS.csproj",
+      "projectUniqueName": "D:\\MyGame\\Game\\MathOperation\\MathOperation.iOS\\MathOperation.iOS.csproj",
       "projectName": "MathOperation.iOS",
-      "projectPath": "C:\\Users\\s4eka\\source\\repos\\MathOperation\\MathOperation\\MathOperation.iOS\\MathOperation.iOS.csproj",
-      "packagesPath": "C:\\Users\\s4eka\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\s4eka\\source\\repos\\MathOperation\\MathOperation\\MathOperation.iOS\\obj\\",
+      "projectPath": "D:\\MyGame\\Game\\MathOperation\\MathOperation.iOS\\MathOperation.iOS.csproj",
+      "packagesPath": "C:\\Users\\by_yhreben\\.nuget\\packages\\",
+      "outputPath": "D:\\MyGame\\Game\\MathOperation\\MathOperation.iOS\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\s4eka\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\by_yhreben\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
@@ -1071,13 +1126,16 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://api.nuget.org/v3/index.json": {}
+        "http://packagesource": {},
+        "https://api.nuget.org/v3/index.json": {},
+        "https://bams-aws.refinitiv.com/artifactory/api/nuget/default.nuget.global": {},
+        "https://bams-aws.refinitiv.com/artifactory/api/nuget/default.nuget.local": {}
       },
       "frameworks": {
         "xamarinios10": {
           "projectReferences": {
-            "C:\\Users\\s4eka\\source\\repos\\MathOperation\\MathOperation\\MathOperation\\MathOperation.csproj": {
-              "projectPath": "C:\\Users\\s4eka\\source\\repos\\MathOperation\\MathOperation\\MathOperation\\MathOperation.csproj"
+            "D:\\MyGame\\Game\\MathOperation\\MathOperation\\MathOperation.csproj": {
+              "projectPath": "D:\\MyGame\\Game\\MathOperation\\MathOperation\\MathOperation.csproj"
             }
           }
         }
@@ -1108,5 +1166,20 @@
         "#import": []
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1605",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Detected package downgrade: Xamarin.Forms from 4.7.0.1142 to 4.5.0.495. Reference the package directly from the project to select a different version. \r\n MathOperation.iOS -> MathOperation -> Xamarin.Forms (>= 4.7.0.1142) \r\n MathOperation.iOS -> Xamarin.Forms (>= 4.5.0.495)",
+      "libraryId": "Xamarin.Forms",
+      "targetGraphs": [
+        "Xamarin.iOS,Version=v1.0",
+        "Xamarin.iOS,Version=v1.0/win",
+        "Xamarin.iOS,Version=v1.0/win-x64",
+        "Xamarin.iOS,Version=v1.0/win-x86"
+      ]
+    }
+  ]
 }

@@ -29,15 +29,31 @@ namespace MathOperation
         private float cellWidth;
         private float goalHeight => (float)((mainDisplayInfo.Height / mainDisplayInfo.Density) * 0.20);
         private float minorLayoutHight => (float)((mainDisplayInfo.Height / mainDisplayInfo.Density) * 0.06);
-        public MainPage()
+        private float whiteSpace => (float)((mainDisplayInfo.Height / mainDisplayInfo.Density) * 0.15);
+
+        private int From = 30;
+        private int To = 50;
+        
+
+        public MainPage(string from, string to)
         {
             InitializeComponent();
-            MainViewModel = new MainViewModel();
+            ParseNumber(from, to);
+            MainViewModel = new MainViewModel(From);
             mainDisplayInfo = DeviceDisplay.MainDisplayInfo;
             MainViewModel.GenerateListButton += GenerateNewButtons;
             MainViewModel.TableViewModel.RemoveButton += RemoveButton;
             CreateMainView();
             NavigationPage.SetHasNavigationBar(this, false);
+        }
+
+        private void ParseNumber(string from, string to)
+        {
+            if(from != string.Empty && to != string.Empty)
+            {
+                From = Int32.Parse(from);
+                To = Int32.Parse(to);
+            }
         }
 
         private void CreateGrid()
@@ -48,7 +64,7 @@ namespace MathOperation
                 ColumnSpacing = 0
             };
 
-            cellHeight = (float)((mainDisplayInfo.Height / mainDisplayInfo.Density - 100 - goalHeight - minorLayoutHight) / MainViewModel.Row);
+            cellHeight = (float)((mainDisplayInfo.Height / mainDisplayInfo.Density - whiteSpace - goalHeight - minorLayoutHight) / MainViewModel.Row);
             cellWidth = (float)(mainDisplayInfo.Width / mainDisplayInfo.Density / MainViewModel.Column);
 
             for (int i = 0; i < MainViewModel.Row; i++)
@@ -114,7 +130,7 @@ namespace MathOperation
 
             Frame frame = new Frame()
             {
-                Margin = new Thickness(2,5,2,0),
+                Margin = new Thickness(1,1,1,0),
                 Padding = 0,
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Center,
@@ -260,7 +276,7 @@ namespace MathOperation
         private void RefrashGrid()
         {
             grid.Children.Clear();
-            MainViewModel.ReFillTable();
+            MainViewModel.ReFillTable(From, To);
             FillGrid();
         }
 
