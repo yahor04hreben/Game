@@ -19,6 +19,8 @@ namespace MathOperation.ViewModel
 
         public ScoreVIewModel ScoreVIewModel { get; private set; }
 
+        public TimerViewModeal TimerViewModeal { get; private set; }
+
         public event EventHandler GenerateListButton;
 
         private void RaiseGenerateListButton(object list, EventArgs eventArgs)
@@ -31,11 +33,13 @@ namespace MathOperation.ViewModel
             TableViewModel = new TableViewModel();
             Randomizer = new Randomizer(TableViewModel.GetCellCount, number);
             TableViewModel.FillTable(Randomizer.MassRandNumbers.ToList());
+
             GoalViewModel = new CellViewModel { Number = Randomizer.Goal, Size = StaticResources.GoalTextSize};
             AddCellViewModel = new AddCellViewModel() { IsClickable = false, ColorClickable = StaticResources.AddCellUnClickable};
             ScoreVIewModel = new ScoreVIewModel() { Points = 0 };
-            AddCellViewModel.GenerateNumberAfteClickAddButton += GenerateNumber;
+            TimerViewModeal = new TimerViewModeal();
 
+            AddCellViewModel.GenerateNumberAfteClickAddButton += GenerateNumber;
             TableViewModel.CheckGoalValue += CheckGoalValue;
         }
 

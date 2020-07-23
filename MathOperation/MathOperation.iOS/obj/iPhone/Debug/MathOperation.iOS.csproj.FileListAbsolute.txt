@@ -116,3 +116,4 @@ D:\MyGame\Game\MathOperation\MathOperation.iOS\obj\iPhone\Debug\XamlC.stamp
 D:\MyGame\Game\MathOperation\MathOperation.iOS\obj\iPhone\Debug\MathOperation.iOS.csproj.CopyComplete
 D:\MyGame\Game\MathOperation\MathOperation.iOS\obj\iPhone\Debug\MathOperation.iOS.exe
 D:\MyGame\Game\MathOperation\MathOperation.iOS\obj\iPhone\Debug\MathOperation.iOS.pdb
+D:\MyGame\Game\MathOperation\MathOperation.iOS\bin\iPhone\Debug\FluentValidation.dll

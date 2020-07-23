@@ -33,6 +33,8 @@ namespace MathOperation
 
         private int From = 30;
         private int To = 50;
+
+        public Button timerButton;
         
 
         public MainPage(string from, string to)
@@ -217,7 +219,7 @@ namespace MathOperation
         private void CreateAddAndScoreButtons()
         {
             AddCellViewModel addCell = MainViewModel.AddCellViewModel;
-            ScoreVIewModel scoreVM = MainViewModel.ScoreVIewModel;
+            TimerViewModeal timeVM = MainViewModel.TimerViewModeal;
 
             StackLayout minorLayout = new StackLayout()
             {
@@ -242,7 +244,7 @@ namespace MathOperation
             Binding color = new Binding() { Source = addCell, Path = "ColorClickable" };
             addButton.SetBinding(Button.BackgroundColorProperty, color);
 
-            Button scoreButton = new Button()
+            timerButton = new Button()
             {
                 TextColor = StaticResources.ColorGoalText,
                 HorizontalOptions = LayoutOptions.StartAndExpand,
@@ -255,21 +257,22 @@ namespace MathOperation
             Button setNumbers = new Button()
             {
                 TextColor = StaticResources.ColorGoalText,
-                HorizontalOptions = LayoutOptions.StartAndExpand,
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
                 HeightRequest = minorLayoutHight,
                 Margin = new Thickness(5),
+                WidthRequest = StaticResources.Width * 0.3,
                 CornerRadius = StaticResources.RadiusGoal,
-                BackgroundColor = StaticResources.GoalBackgroundColor
+                BackgroundColor = StaticResources.GoalBackgroundColor,
+                Text = "Set Range"
             };
-
             setNumbers.Clicked += SetNumbersButton_Click;
+            
 
-            Binding textBinding = new Binding() { Source = scoreVM, Path = "Text" };
-            scoreButton.SetBinding(Button.TextProperty, textBinding);
 
-            minorLayout.Children.Add(scoreButton);
+            minorLayout.Children.Add(timerButton);
             minorLayout.Children.Add(setNumbers);
             minorLayout.Children.Add(addButton);
+
             mainLayout.Children.Add(minorLayout);
         }
 
@@ -279,7 +282,6 @@ namespace MathOperation
             MainViewModel.ReFillTable(From, To);
             FillGrid();
         }
-
         private async void SetNumbersButton_Click(object sender, EventArgs e)
         {
             await Navigation.PushModalAsync(new SetNumbersPage());

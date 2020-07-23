@@ -46,8 +46,8 @@ namespace MathOperation.View
             var majorLayout = new StackLayout
             {
                 Orientation = StackOrientation.Vertical,
-                VerticalOptions = LayoutOptions.Center,
-                HorizontalOptions = LayoutOptions.Center
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                HorizontalOptions = LayoutOptions.FillAndExpand
             };
 
             var boxWidth = StaticResources.Height * 0.25;
@@ -56,8 +56,8 @@ namespace MathOperation.View
             var layout1 = new StackLayout
             {
                 Orientation = StackOrientation.Vertical,
-                HorizontalOptions = LayoutOptions.Center,
-                VerticalOptions = LayoutOptions.Center,
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                VerticalOptions = LayoutOptions.CenterAndExpand,
                 HeightRequest = boxHeight,
                 WidthRequest = boxWidth
             };
@@ -65,8 +65,8 @@ namespace MathOperation.View
             var layout2 = new StackLayout
             {
                 Orientation = StackOrientation.Vertical,
-                HorizontalOptions = LayoutOptions.Center,
-                VerticalOptions = LayoutOptions.Center,
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                VerticalOptions = LayoutOptions.CenterAndExpand,
                 HeightRequest = boxHeight,
                 WidthRequest = boxWidth
             };
@@ -86,8 +86,8 @@ namespace MathOperation.View
             var minorLayout = new StackLayout
             {
                 Orientation = StackOrientation.Horizontal,
-                HorizontalOptions = LayoutOptions.Center,
-                VerticalOptions = LayoutOptions.Center,
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                VerticalOptions = LayoutOptions.CenterAndExpand,
                 HeightRequest = frame.Height,
                 WidthRequest = frame.Width
             };
@@ -95,20 +95,50 @@ namespace MathOperation.View
             minorLayout.Children.Add(layout1);
             minorLayout.Children.Add(layout2);
 
+            StackLayout layoutToButton = new StackLayout
+            {
+                Orientation = StackOrientation.Horizontal,
+                VerticalOptions = LayoutOptions.End,
+                HorizontalOptions = LayoutOptions.CenterAndExpand
+            };
+
             var OkButton = new Button
             {
                 Text = "OK",
                 FontSize = StaticResources.GoalTextSize * 0.6,
-                BackgroundColor = Color.White
+                BackgroundColor = Color.White,
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center,
+                WidthRequest = frame.WidthRequest * 0.5,
+                Margin = new Thickness(5),
             };
             OkButton.Clicked += ClickOnOk;
 
+            var cancelButton = new Button
+            {
+                Text = "Cancel",
+                FontSize = StaticResources.GoalTextSize * 0.6,
+                BackgroundColor = Color.White,
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center,
+                WidthRequest = frame.WidthRequest * 0.5,
+                Margin = new Thickness(5)
+            };
+            cancelButton.Clicked += ClickOnCancel;
+
+            layoutToButton.Children.Add(cancelButton);
+            layoutToButton.Children.Add(OkButton);
+
             majorLayout.Children.Add(minorLayout);
-            majorLayout.Children.Add(OkButton);
+            majorLayout.Children.Add(layoutToButton);
 
             frame.Content = majorLayout;
         }
 
+        private async void ClickOnCancel(object sender, EventArgs e)
+        {
+            await Navigation.PopModalAsync();
+        }
 
         private async void ClickOnOk(object sander, EventArgs args)
         {
