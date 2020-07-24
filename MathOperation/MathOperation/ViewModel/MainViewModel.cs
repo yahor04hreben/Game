@@ -48,12 +48,20 @@ namespace MathOperation.ViewModel
             Randomizer = new Randomizer(TableViewModel.GetCellCount, number);
             TableViewModel.FillTable(Randomizer.MassRandNumbers.ToList());
 
-            GoalViewModel = new CellViewModel { Number = Randomizer.Goal, Size = StaticResources.GoalTextSize};
-            AddCellViewModel = new AddCellViewModel() { IsClickable = false, ColorClickable = StaticResources.AddCellUnClickable};
+            GoalViewModel = new CellViewModel { Number = Randomizer.Goal, Size = StaticResources.GoalTextSize };
+            AddCellViewModel = new AddCellViewModel() { IsClickable = false, ColorClickable = StaticResources.AddCellUnClickable };
             ScoreVIewModel = new ScoreVIewModel() { Points = 0 };
 
             AddCellViewModel.GenerateNumberAfteClickAddButton += GenerateNumber;
             TableViewModel.CheckGoalValue += CheckGoalValue;
+        }
+
+        public void RefreshMainModel(int fromNumber)
+        {
+            Randomizer.Goal = fromNumber;
+            Randomizer.FillListOfRandNumber();
+            TableViewModel.FillTable(Randomizer.MassRandNumbers.ToList());
+            GoalViewModel.Number = fromNumber;
         }
 
         public void ReFillTable(int from, int to)

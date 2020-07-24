@@ -32,27 +32,12 @@ namespace MathOperation
         private float minorLayoutHight => (float)((mainDisplayInfo.Height / mainDisplayInfo.Density) * 0.06);
         private float whiteSpace => (float)((mainDisplayInfo.Height / mainDisplayInfo.Density) * 0.15);
 
-        private int _From = 30;
-        public int From
-        {
-            get => _From;
-            set
-            {
-                _From = value;
-            }
-        }
 
-        private int _To = 50;
-        public int To
-        {
-            get => _To;
-            set
-            {
-                _To = value;
-            }
-        }
+        public int From;
+        public int To;
 
         public Button timerButton { get; set; }
+        public Button addButton { get; set; }
 
         public event EventHandler RefreshTimer;
 
@@ -60,30 +45,46 @@ namespace MathOperation
         {
             RefreshTimer?.Invoke(sender, args);
         }
-        public MainPage(string from, string to, MainViewModel  main = null, Button button = null)
+        public MainPage(string from, string to, MainViewModel  main = null, Button timerButton = null, Button addButton = null, Grid grid = null)
         {
+            if(from == string.Empty && to == string.Empty)
+            {
+                From = 30;
+                To = 40;
+            }
+
             InitializeComponent();
+            ParseNumber(from, to);
+
             if (main == null)
+            {
                 MainViewModel = new MainViewModel(From);
+                MainViewModel.GenerateListButton += GenerateNewButtons;
+                MainViewModel.TableViewModel.RemoveButton += RemoveButton;
+            }
             else
             {
                 MainViewModel = main;
                 MainViewModel.TimerViewModeal.Resume();
+                MainViewModel.RefreshMainModel(From);
+                MainViewModel.TableViewModel.ResetEvent();
+                MainViewModel.TableViewModel.RemoveButton += RemoveButton;
             }
 
-            if (button != null)
-                timerButton = button;
+            if (grid != null)
+                this.grid = grid;
 
-            ParseNumber(from, to);
+            if (timerButton != null)
+                this.timerButton = timerButton;
+
+            if (addButton != null)
+                this.addButton = addButton;
+
             mainDisplayInfo = DeviceDisplay.MainDisplayInfo;
-            MainViewModel.GenerateListButton += GenerateNewButtons;
-            MainViewModel.TableViewModel.RemoveButton += RemoveButton;
-            CreateMainView();
+
             NavigationPage.SetHasNavigationBar(this, false);
 
-            if(main != null)
-                RefrashGrid();
-
+            CreateMainView();
         }
 
         private void ParseNumber(string from, string to)
@@ -97,23 +98,32 @@ namespace MathOperation
 
         private void CreateGrid()
         {
-            grid = new Grid()
-            {
-                RowSpacing = 0,
-                ColumnSpacing = 0
-            };
-
             cellHeight = (float)((mainDisplayInfo.Height / mainDisplayInfo.Density - whiteSpace - goalHeight - minorLayoutHight) / MainViewModel.Row);
             cellWidth = (float)(mainDisplayInfo.Width / mainDisplayInfo.Density / MainViewModel.Column);
 
-            for (int i = 0; i < MainViewModel.Row; i++)
+            if (grid == null)
             {
-                grid.RowDefinitions.Add(new RowDefinition() { Height = cellHeight });
-            }
+                grid = new Grid()
+                {
+                    RowSpacing = 0,
+                    ColumnSpacing = 0
+                };
 
-            for (int i = 0; i < MainViewModel.Column; i++)
+                
+
+                for (int i = 0; i < MainViewModel.Row; i++)
+                {
+                    grid.RowDefinitions.Add(new RowDefinition() { Height = cellHeight });
+                }
+
+                for (int i = 0; i < MainViewModel.Column; i++)
+                {
+                    grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = cellWidth });
+                }
+            }
+            else
             {
-                grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = cellWidth });
+                grid.Children.Clear();
             }
 
             FillGrid();
@@ -267,16 +277,17 @@ namespace MathOperation
                 Padding = new Thickness(0)
             };
 
-            Button addButton = new Button()
-            {
-                Text = addCell.Text,
-                TextColor = StaticResources.ColorGoalText,
-                HorizontalOptions = LayoutOptions.EndAndExpand,
-                HeightRequest = minorLayoutHight,
-                Margin = new Thickness(5),
-                CornerRadius = StaticResources.RadiusGoal,
-                Command = addCell.ClickOnAddButton
-            };
+            if(addButton == null)
+                addButton = new Button()
+                {
+                    Text = addCell.Text,
+                    TextColor = StaticResources.ColorGoalText,
+                    HorizontalOptions = LayoutOptions.EndAndExpand,
+                    HeightRequest = minorLayoutHight,
+                    Margin = new Thickness(5),
+                    CornerRadius = StaticResources.RadiusGoal,
+                    Command = addCell.ClickOnAddButton
+                };
 
             Binding color = new Binding() { Source = addCell, Path = "ColorClickable" };
             addButton.SetBinding(Button.BackgroundColorProperty, color);

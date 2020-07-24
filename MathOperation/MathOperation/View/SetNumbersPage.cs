@@ -173,6 +173,7 @@ namespace MathOperation.View
 
         private async void ClickOnCancel(object sender, EventArgs e)
         {
+            page.MainViewModel.TimerViewModeal.Resume();
             await Navigation.PopModalAsync();
         }
 
@@ -186,7 +187,7 @@ namespace MathOperation.View
                 if (Int32.Parse(fromText.Text) >= Int32.Parse(toText.Text))
                     CreateErrorLabel();
                 else
-                    await Navigation.PushModalAsync(new MainPage(fromText.Text, toText.Text, page.MainViewModel, page.timerButton));
+                    await Navigation.PushModalAsync(new MainPage(fromText.Text, toText.Text, page.MainViewModel, page.timerButton, page.addButton, page.grid));
             }   
         }
 

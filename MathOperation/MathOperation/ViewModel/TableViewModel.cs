@@ -25,6 +25,11 @@ namespace MathOperation.ViewModel
             CheckGoalValue?.Invoke(list, args);
         }
 
+        public void ResetEvent()
+        {
+            RemoveButton = null;
+        }
+
         private void RaiseRemoveButton(object list, EventArgs args)
         {
             RemoveButton?.Invoke(list, args);

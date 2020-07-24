@@ -91,7 +91,7 @@ namespace MathOperation.ViewModel
             }
         }
 
-        private bool _IsVisible;
+        private bool _IsVisible = true;
         public bool IsVisible
         {
             get { return _IsVisible; }

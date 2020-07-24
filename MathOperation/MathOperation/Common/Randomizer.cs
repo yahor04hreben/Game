@@ -131,7 +131,7 @@ namespace MathOperation.Common
 
         public int GenerateNumber()
         {
-            int times = 40;
+            int times = 60;
             var result = new List<List<int>>();
             int resultNumber = 0;
 
