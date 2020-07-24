@@ -19,7 +19,21 @@ namespace MathOperation.ViewModel
 
         public ScoreVIewModel ScoreVIewModel { get; private set; }
 
-        public TimerViewModeal TimerViewModeal { get; private set; }
+        private TimerViewModeal _TimerViewModeal;
+        public TimerViewModeal TimerViewModeal
+        {
+            get
+            {
+                if (_TimerViewModeal == null)
+                    _TimerViewModeal = new TimerViewModeal();
+
+                return _TimerViewModeal;
+            }
+            set
+            {
+                _TimerViewModeal = value;
+            }
+        }
 
         public event EventHandler GenerateListButton;
 
@@ -37,7 +51,6 @@ namespace MathOperation.ViewModel
             GoalViewModel = new CellViewModel { Number = Randomizer.Goal, Size = StaticResources.GoalTextSize};
             AddCellViewModel = new AddCellViewModel() { IsClickable = false, ColorClickable = StaticResources.AddCellUnClickable};
             ScoreVIewModel = new ScoreVIewModel() { Points = 0 };
-            TimerViewModeal = new TimerViewModeal();
 
             AddCellViewModel.GenerateNumberAfteClickAddButton += GenerateNumber;
             TableViewModel.CheckGoalValue += CheckGoalValue;

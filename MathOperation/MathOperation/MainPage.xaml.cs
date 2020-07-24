@@ -19,8 +19,9 @@ namespace MathOperation
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
-        public MainViewModel MainViewModel { get; private set; }
+        public MainViewModel MainViewModel { get;  set; }
         public Grid grid { get; private set; }
+
         public Label label { get; private set; }
 
         private object locker = new object();
@@ -31,22 +32,58 @@ namespace MathOperation
         private float minorLayoutHight => (float)((mainDisplayInfo.Height / mainDisplayInfo.Density) * 0.06);
         private float whiteSpace => (float)((mainDisplayInfo.Height / mainDisplayInfo.Density) * 0.15);
 
-        private int From = 30;
-        private int To = 50;
+        private int _From = 30;
+        public int From
+        {
+            get => _From;
+            set
+            {
+                _From = value;
+            }
+        }
 
-        public Button timerButton;
-        
+        private int _To = 50;
+        public int To
+        {
+            get => _To;
+            set
+            {
+                _To = value;
+            }
+        }
 
-        public MainPage(string from, string to)
+        public Button timerButton { get; set; }
+
+        public event EventHandler RefreshTimer;
+
+        private void RaiseRefreshTimer(object sender, EventArgs args)
+        {
+            RefreshTimer?.Invoke(sender, args);
+        }
+        public MainPage(string from, string to, MainViewModel  main = null, Button button = null)
         {
             InitializeComponent();
+            if (main == null)
+                MainViewModel = new MainViewModel(From);
+            else
+            {
+                MainViewModel = main;
+                MainViewModel.TimerViewModeal.Resume();
+            }
+
+            if (button != null)
+                timerButton = button;
+
             ParseNumber(from, to);
-            MainViewModel = new MainViewModel(From);
             mainDisplayInfo = DeviceDisplay.MainDisplayInfo;
             MainViewModel.GenerateListButton += GenerateNewButtons;
             MainViewModel.TableViewModel.RemoveButton += RemoveButton;
             CreateMainView();
             NavigationPage.SetHasNavigationBar(this, false);
+
+            if(main != null)
+                RefrashGrid();
+
         }
 
         private void ParseNumber(string from, string to)
@@ -244,15 +281,16 @@ namespace MathOperation
             Binding color = new Binding() { Source = addCell, Path = "ColorClickable" };
             addButton.SetBinding(Button.BackgroundColorProperty, color);
 
-            timerButton = new Button()
-            {
-                TextColor = StaticResources.ColorGoalText,
-                HorizontalOptions = LayoutOptions.StartAndExpand,
-                HeightRequest = minorLayoutHight,
-                Margin = new Thickness(5),
-                CornerRadius = StaticResources.RadiusGoal,
-                BackgroundColor = StaticResources.GoalBackgroundColor
-            };
+            if(timerButton == null)
+                timerButton = new Button()
+                {
+                    TextColor = StaticResources.ColorGoalText,
+                    HorizontalOptions = LayoutOptions.StartAndExpand,
+                    HeightRequest = minorLayoutHight,
+                    Margin = new Thickness(5),
+                    CornerRadius = StaticResources.RadiusGoal,
+                    BackgroundColor = StaticResources.GoalBackgroundColor
+                };
 
             Button setNumbers = new Button()
             {
@@ -282,9 +320,11 @@ namespace MathOperation
             MainViewModel.ReFillTable(From, To);
             FillGrid();
         }
+
         private async void SetNumbersButton_Click(object sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(new SetNumbersPage());
+            MainViewModel.TimerViewModeal.Stop();
+            await Navigation.PushModalAsync(new SetNumbersPage(this));
         }
     }
 }

@@ -15,6 +15,7 @@ namespace MathOperation.Droid
     {
         Xamarin.Forms.Button button;
         TimerViewModeal Timer;
+        App app;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             TabLayoutResource = Resource.Layout.Tabbar;
@@ -24,8 +25,9 @@ namespace MathOperation.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            var app = new App();
+            app = new App();
             LoadApplication(app);
+            app._MainPage.RefreshTimer += RefreshTimer;
 
             button = app._MainPage.timerButton;
             Timer = app._MainPage.MainViewModel.TimerViewModeal;
@@ -41,6 +43,16 @@ namespace MathOperation.Droid
             RunOnUiThread(() => button.Text = Timer.GetTime());
         }
 
+
+        private void RefreshTimer(object sender, EventArgs args)
+        {
+            var mainPage = sender as MainPage;
+            button = mainPage.timerButton;
+            Timer = mainPage.MainViewModel.TimerViewModeal;
+            Timer.Timer.Elapsed += Timer_Elapsed;
+
+            Timer.Start();
+        }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);

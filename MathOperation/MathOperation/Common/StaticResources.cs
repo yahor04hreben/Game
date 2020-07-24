@@ -23,6 +23,8 @@ namespace MathOperation.Common
 
         public static Color ColorGoalText => Color.White;
 
+        public static Color ErrorBackColor => Color.FromArgb(5, 130, 0, 0);
+
         public static float Width => (float)(DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density);
         public static float Height => (float)(DeviceDisplay.MainDisplayInfo.Height / DeviceDisplay.MainDisplayInfo.Density);
     }
