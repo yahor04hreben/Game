@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "cOsE8el9/CVZfGK/bqYpka4RSgJEkmm1R1rMhvkehMrVKl29emCUxWD1SVLqtOXjdo6Ib9nwmwzvNoXSUJJ+gA==",
+  "dgSpecHash": "ZY8PP/k4Hn6bBlJ/l3K+k0AbPXXmhSJCfCr7Hs+PRNKll0oFwL2ft1zRZp4vo+woF81qy+u+pCytF958CrYUMw==",
   "success": true,
-  "projectFilePath": "D:\\MyGame\\Game\\MathOperation\\MathOperation.iOS\\MathOperation.iOS.csproj",
+  "projectFilePath": "C:\\Users\\s4eka\\source\\repos\\MathOperation\\MathOperation\\MathOperation.iOS\\MathOperation.iOS.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\by_yhreben\\.nuget\\packages\\fluentvalidation\\9.0.1\\fluentvalidation.9.0.1.nupkg.sha512",
-    "C:\\Users\\by_yhreben\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
+    "C:\\Users\\s4eka\\.nuget\\packages\\fluentvalidation\\9.0.1\\fluentvalidation.9.0.1.nupkg.sha512",
+    "C:\\Users\\s4eka\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
     "C:\\Microsoft\\Xamarin\\NuGet\\xamarin.essentials\\1.3.1\\xamarin.essentials.1.3.1.nupkg.sha512",
     "C:\\Microsoft\\Xamarin\\NuGet\\xamarin.forms\\4.5.0.495\\xamarin.forms.4.5.0.495.nupkg.sha512"
   ],

@@ -117,3 +117,4 @@ D:\MyGame\Game\MathOperation\MathOperation.iOS\obj\iPhone\Debug\MathOperation.iO
 D:\MyGame\Game\MathOperation\MathOperation.iOS\obj\iPhone\Debug\MathOperation.iOS.exe
 D:\MyGame\Game\MathOperation\MathOperation.iOS\obj\iPhone\Debug\MathOperation.iOS.pdb
 D:\MyGame\Game\MathOperation\MathOperation.iOS\bin\iPhone\Debug\FluentValidation.dll
+C:\Users\s4eka\source\repos\MathOperation\MathOperation\MathOperation.iOS\bin\iPhone\Debug\FluentValidation.dll

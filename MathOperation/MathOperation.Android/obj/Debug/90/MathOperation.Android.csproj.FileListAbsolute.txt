@@ -951,3 +951,4 @@ D:\MyGame\Game\MathOperation\MathOperation.Android\obj\Debug\90\stamp\_ConvertRe
 D:\MyGame\Game\MathOperation\MathOperation.Android\obj\Debug\90\stamp\_GenerateJavaStubs.stamp
 D:\MyGame\Game\MathOperation\MathOperation.Android\obj\Debug\90\stamp\_GeneratePackageManagerJava.stamp
 D:\MyGame\Game\MathOperation\MathOperation.Android\obj\Debug\90\stamp\_ResolveLibraryProjectImports.stamp
+C:\Users\s4eka\source\repos\MathOperation\MathOperation\MathOperation.Android\obj\Debug\90\android\assets\FluentValidation.dll

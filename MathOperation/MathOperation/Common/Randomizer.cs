@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Xamarin.Forms;
 
 namespace MathOperation.Common
 {
@@ -11,12 +12,34 @@ namespace MathOperation.Common
         private Random rand;
 
         private int DeltaHeader => Goal / 2;
-       
+
         public List<int> MassRandNumbers { get; private set; }
 
         public int Count { get; private set; }
 
         public int Goal { get; set; }
+
+        private int _MinValue;
+        public int MinValue
+        {
+            get => _MinValue;
+            set
+            {
+                if (_MinValue != value)
+                    _MinValue = value;
+            }
+        }
+
+        private int _MaxValue;
+        public int MaxValue
+        {
+            get => _MaxValue;
+            set
+            {
+                if (_MaxValue != value)
+                    _MaxValue = value;
+            }
+        }
 
         public Randomizer(int count, int goal)
         {
@@ -102,7 +125,7 @@ namespace MathOperation.Common
 
             int removedCount = disappearedList.Count;
 
-            foreach(var item in disappearedList)
+            foreach (var item in disappearedList)
             {
                 MassRandNumbers.Remove(item);
             }
@@ -135,14 +158,14 @@ namespace MathOperation.Common
             var result = new List<List<int>>();
             int resultNumber = 0;
 
-            while(!Run(result) && MassRandNumbers.Count != 0)
+            while (!Run(result) && MassRandNumbers.Count != 0)
             {
                 result.Clear();
                 if (times-- == 0)
                     break;
 
                 MassRandNumbers.Remove(resultNumber);
-                
+
                 resultNumber = GenerateRandNumber(Goal - DeltaHeader);
                 MassRandNumbers.Add(resultNumber);
             }
@@ -198,19 +221,33 @@ namespace MathOperation.Common
 
         public int GetNewGoalValue()
         {
-            Goal += rand.Next(1,DeltaHeader);
+            int times = 10;
+            do
+            {
+                Goal = rand.Next(MinValue, MaxValue);
+            }
+            while (times-- > 0 && Run(new List<List<int>>()));
+
             return Goal;
         }
 
         public int GenerateRandNumber(int maxValue, int minValue = 1)
         {
-            return rand.Next(minValue, maxValue);
+            if(2 * DeltaHeader - MinValue <= DeltaHeader / 2)
+                return rand.Next(DeltaHeader / 2, DeltaHeader);
+            return rand.Next(1 + DeltaHeader, MinValue - DeltaHeader);
         }
 
+
+        public void ChangeFromToNumbers(int from, int to)
+        {
+            MaxValue = to;
+            MinValue = from;
+        }
         public List<int> GenerateRandCollection(int count)
         {
             var tempList = new List<int>();
-            for(int i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
                 tempList.Add(GenerateRandNumber(Goal - DeltaHeader));
             }
@@ -222,7 +259,7 @@ namespace MathOperation.Common
         {
             RemoveNumberFromMass(list);
             var listOfNumber = new List<int>();
-            while(!IsHasResolves())
+            while (!IsHasResolves())
             {
                 listOfNumber.Clear();
                 listOfNumber = GenerateRandCollection(count);

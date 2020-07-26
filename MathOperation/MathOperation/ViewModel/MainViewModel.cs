@@ -64,9 +64,9 @@ namespace MathOperation.ViewModel
             GoalViewModel.Number = fromNumber;
         }
 
-        public void ReFillTable(int from, int to)
+        public void ReFillTable()
         {
-            int goal = Randomizer.GenerateRandNumber(to, from);
+            int goal = Randomizer.GetNewGoalValue();
             Randomizer.Goal = goal;
             GoalViewModel.Number = goal;
             Randomizer.FillListOfRandNumber();
@@ -92,12 +92,15 @@ namespace MathOperation.ViewModel
                     AddCellViewModel.SetClickableButton();
                     ScoreVIewModel.AddPoints(selectedList.Select(c => c.Number).ToList());
                     selectedList.Clear();
+
+                    int randNumber = Randomizer.GetNewGoalValue();
+                    GoalViewModel.Number = randNumber;
                 }
             }
         }
 
 
-        private void GenerateNumber(object obj, EventArgs args)
+        public void GenerateNumber(object obj, EventArgs args)
         {
             Point? point = TableViewModel.GetLowestCellPoint();
             if (point != null)

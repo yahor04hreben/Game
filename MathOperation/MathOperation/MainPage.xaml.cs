@@ -5,9 +5,11 @@ using MathOperation.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
@@ -41,11 +43,14 @@ namespace MathOperation
 
         public event EventHandler RefreshTimer;
 
+        private bool animatiomInProgress = false;
+        Stopwatch stopWatch = new Stopwatch();
+
         private void RaiseRefreshTimer(object sender, EventArgs args)
         {
             RefreshTimer?.Invoke(sender, args);
         }
-        public MainPage(string from, string to, MainViewModel  main = null, Button timerButton = null, Button addButton = null, Grid grid = null)
+        public MainPage(string from, string to, MainViewModel  main = null, Button timerButton = null, Grid grid = null)
         {
             if(from == string.Empty && to == string.Empty)
             {
@@ -70,15 +75,13 @@ namespace MathOperation
                 MainViewModel.TableViewModel.ResetEvent();
                 MainViewModel.TableViewModel.RemoveButton += RemoveButton;
             }
+            MainViewModel.Randomizer.ChangeFromToNumbers(From, To);
 
             if (grid != null)
                 this.grid = grid;
 
             if (timerButton != null)
                 this.timerButton = timerButton;
-
-            if (addButton != null)
-                this.addButton = addButton;
 
             mainDisplayInfo = DeviceDisplay.MainDisplayInfo;
 
@@ -150,7 +153,7 @@ namespace MathOperation
         private void CreateMainView()
         {
             mainLayout.Children.Clear();
-            CreateAddAndScoreButtons();
+            CreateHelpAndScoreButtons();
             CreateGoalLabel();
             CreateGrid();
             //mainLayout.Children.Add(label);
@@ -160,36 +163,29 @@ namespace MathOperation
         private void CreateGoalLabel()
         {
             var goalViewModel = MainViewModel.GoalViewModel;
+            var addButton = MainViewModel.AddCellViewModel;
 
-            label = new Label()
+            var goalButton = new Button
             {
+                TextColor = StaticResources.ColorGoalText,
                 IsVisible = true,
                 FontSize = goalViewModel.Size,
                 WidthRequest = (float)(mainDisplayInfo.Width / mainDisplayInfo.Density) - 10,
                 HeightRequest = goalHeight,
-                BackgroundColor = StaticResources.GoalBackgroundColor,
-                HorizontalTextAlignment = TextAlignment.Center,
-                VerticalTextAlignment = TextAlignment.Center,
-                TextColor = StaticResources.ColorGoalText
+                CornerRadius = StaticResources.RadiusGoal,
+                Command = addButton.ClickOnAddButton
             };
+            goalButton.Pressed += OnGoalButtonPressed;
+            goalButton.Released += OnGoalButtonReleased;
 
 
             Binding bindingText = new Binding() { Source = goalViewModel, Path = "Number" };
-            label.SetBinding(Label.TextProperty, bindingText);
+            goalButton.SetBinding(Button.TextProperty, bindingText);
 
-            Frame frame = new Frame()
-            {
-                Margin = new Thickness(1,1,1,0),
-                Padding = 0,
-                HorizontalOptions = LayoutOptions.Center,
-                VerticalOptions = LayoutOptions.Center,
-                HasShadow = true,
-                IsClippedToBounds = true,
-                CornerRadius = StaticResources.RadiusGoal,
-                Content = label
-            };
+            Binding bindColor = new Binding() { Source = addButton, Path = "ColorClickable" };
+            goalButton.SetBinding(Button.BackgroundColorProperty, bindColor);
 
-            mainLayout.Children.Add(frame);
+            mainLayout.Children.Add(goalButton);
         }
 
         private void GenerateNewButtons(object twoList, EventArgs args)
@@ -263,7 +259,7 @@ namespace MathOperation
                 RefrashGrid();
         }
 
-        private void CreateAddAndScoreButtons()
+        private void CreateHelpAndScoreButtons()
         {
             AddCellViewModel addCell = MainViewModel.AddCellViewModel;
             TimerViewModeal timeVM = MainViewModel.TimerViewModeal;
@@ -277,20 +273,16 @@ namespace MathOperation
                 Padding = new Thickness(0)
             };
 
-            if(addButton == null)
-                addButton = new Button()
-                {
-                    Text = addCell.Text,
-                    TextColor = StaticResources.ColorGoalText,
-                    HorizontalOptions = LayoutOptions.EndAndExpand,
-                    HeightRequest = minorLayoutHight,
-                    Margin = new Thickness(5),
-                    CornerRadius = StaticResources.RadiusGoal,
-                    Command = addCell.ClickOnAddButton
-                };
-
-            Binding color = new Binding() { Source = addCell, Path = "ColorClickable" };
-            addButton.SetBinding(Button.BackgroundColorProperty, color);
+            var helpButton = new Button()
+            {
+                Text = "Help",
+                TextColor = StaticResources.ColorGoalText,
+                HorizontalOptions = LayoutOptions.EndAndExpand,
+                HeightRequest = minorLayoutHight,
+                Margin = new Thickness(5),
+                CornerRadius = StaticResources.RadiusGoal,
+                BackgroundColor = StaticResources.GoalBackgroundColor
+            };
 
             if(timerButton == null)
                 timerButton = new Button()
@@ -320,7 +312,7 @@ namespace MathOperation
 
             minorLayout.Children.Add(timerButton);
             minorLayout.Children.Add(setNumbers);
-            minorLayout.Children.Add(addButton);
+            minorLayout.Children.Add(helpButton);
 
             mainLayout.Children.Add(minorLayout);
         }
@@ -328,7 +320,7 @@ namespace MathOperation
         private void RefrashGrid()
         {
             grid.Children.Clear();
-            MainViewModel.ReFillTable(From, To);
+            MainViewModel.ReFillTable();
             FillGrid();
         }
 
@@ -336,6 +328,33 @@ namespace MathOperation
         {
             MainViewModel.TimerViewModeal.Stop();
             await Navigation.PushModalAsync(new SetNumbersPage(this));
+        }
+
+        private void OnGoalButtonPressed(object sender, EventArgs args)
+        {
+            stopWatch.Start();
+            animatiomInProgress = true;
+        }
+
+        private void OnGoalButtonReleased(object sender, EventArgs args)
+        {
+            if(stopWatch.ElapsedMilliseconds > 1000)
+            {
+                FillFullWhiteSpace();
+            }
+
+            animatiomInProgress = false;
+            stopWatch.Stop();
+        }
+
+        private void FillFullWhiteSpace()
+        {
+            int count = MainViewModel.TableViewModel.Table.LengthTable(MainViewModel.TableViewModel.Row);
+            while (count < 20)
+            {
+                MainViewModel.GenerateNumber(this, EventArgs.Empty);
+                count++;
+            }
         }
     }
 }

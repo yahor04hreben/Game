@@ -11,7 +11,6 @@ C:\Users\s4eka\source\repos\MathOperation\MathOperation\MathOperation\obj\Debug\
 C:\Users\s4eka\source\repos\MathOperation\MathOperation\MathOperation\obj\Debug\netstandard2.0\MathOperation.dll
 C:\Users\s4eka\source\repos\MathOperation\MathOperation\MathOperation\obj\Debug\netstandard2.0\ref\MathOperation.dll
 C:\Users\s4eka\source\repos\MathOperation\MathOperation\MathOperation\obj\Debug\netstandard2.0\MathOperation.pdb
-C:\Users\s4eka\source\repos\MathOperation\MathOperation\MathOperation\obj\Debug\netstandard2.0\MathOperation.csprojAssemblyReference.cache
 D:\MyGame\Game\MathOperation\MathOperation\obj\Debug\netstandard2.0\MathOperation.AssemblyInfoInputs.cache
 D:\MyGame\Game\MathOperation\MathOperation\obj\Debug\netstandard2.0\MathOperation.AssemblyInfo.cs
 D:\MyGame\Game\MathOperation\MathOperation\obj\Debug\netstandard2.0\MathOperation.dll
@@ -26,3 +25,4 @@ D:\MyGame\Game\MathOperation\MathOperation\obj\Debug\netstandard2.0\MainPage.xam
 D:\MyGame\Game\MathOperation\MathOperation\obj\Debug\netstandard2.0\MathOperation.csprojAssemblyReference.cache
 D:\MyGame\Game\MathOperation\MathOperation\obj\Debug\netstandard2.0\MathOperation.csproj.CoreCompileInputs.cache
 D:\MyGame\Game\MathOperation\MathOperation\obj\Debug\netstandard2.0\XamlC.stamp
+C:\Users\s4eka\source\repos\MathOperation\MathOperation\MathOperation\obj\Debug\netstandard2.0\MathOperation.csprojAssemblyReference.cache

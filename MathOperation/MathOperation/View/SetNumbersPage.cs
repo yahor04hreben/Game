@@ -153,7 +153,7 @@ namespace MathOperation.View
             var cancelButton = new Button
             {
                 Text = "Cancel",
-                FontSize = StaticResources.GoalTextSize * 0.6,
+                FontSize = StaticResources.GoalTextSize * 0.5,
                 BackgroundColor = Color.White,
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Center,
@@ -187,7 +187,7 @@ namespace MathOperation.View
                 if (Int32.Parse(fromText.Text) >= Int32.Parse(toText.Text))
                     CreateErrorLabel();
                 else
-                    await Navigation.PushModalAsync(new MainPage(fromText.Text, toText.Text, page.MainViewModel, page.timerButton, page.addButton, page.grid));
+                    await Navigation.PushModalAsync(new MainPage(fromText.Text, toText.Text, page.MainViewModel, page.timerButton, page.grid));
             }   
         }
 

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using Xamarin.Forms;
 
 namespace MathOperation.Helpers
 { 
@@ -13,7 +15,8 @@ namespace MathOperation.Helpers
 
             for (int i = 0; i < rowLength; i++)
             {
-                rowVector[i] = matrix[rowIndex, i];
+                if (matrix[rowIndex, i] != null)
+                    rowVector[i] = matrix[rowIndex, i];
             }
 
             return rowVector;
@@ -51,6 +54,17 @@ namespace MathOperation.Helpers
         {
             for (int i = 0; i < Row; i++)
                 table[i, columnIndex] = default(T);
+        }
+
+        public static int LengthTable<T>(this T[,] table, int row)
+        {
+            int count = 0;
+            for(int i = 0; i < row - 1; i++)
+            {
+                count += table.GetColumn(i).Count;
+            }
+
+            return count;
         }
     }
 }
