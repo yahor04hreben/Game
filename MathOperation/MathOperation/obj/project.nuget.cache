@@ -1,15 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "s24GoSuMxUMUaXOa11cSVo2L6IP38P5A7Ovprmk4LGmvv7PyHAjVYWSy5FPjR6Z699m7k/wMBSAkC+GzpNap0g==",
+  "dgSpecHash": "/z2BUek4bWm656n0hHrC3e37DX8cj1X3TTe6ScvbzudYXuTf4s7B9CB2eYoHNXA7AUOCA9I7K1zPgJzJU3TvsQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\s4eka\\source\\repos\\MathOperation\\MathOperation\\MathOperation\\MathOperation.csproj",
+  "projectFilePath": "D:\\MyGame_1\\Game\\MathOperation\\MathOperation\\MathOperation.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\s4eka\\.nuget\\packages\\fluentvalidation\\9.0.1\\fluentvalidation.9.0.1.nupkg.sha512",
-    "C:\\Users\\s4eka\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
-    "C:\\Users\\s4eka\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
-    "C:\\Users\\s4eka\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
+    "C:\\Users\\by_yhreben\\.nuget\\packages\\fluentvalidation\\9.0.1\\fluentvalidation.9.0.1.nupkg.sha512",
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
+    "C:\\Users\\by_yhreben\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",
     "C:\\Microsoft\\Xamarin\\NuGet\\xamarin.essentials\\1.3.1\\xamarin.essentials.1.3.1.nupkg.sha512",
-    "C:\\Users\\s4eka\\.nuget\\packages\\xamarin.forms\\4.7.0.1142\\xamarin.forms.4.7.0.1142.nupkg.sha512"
+    "C:\\Users\\by_yhreben\\.nuget\\packages\\xamarin.forms\\4.7.0.1142\\xamarin.forms.4.7.0.1142.nupkg.sha512"
   ],
   "logs": []
 }

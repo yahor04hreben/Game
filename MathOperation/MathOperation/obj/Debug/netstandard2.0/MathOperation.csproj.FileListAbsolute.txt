@@ -26,3 +26,17 @@ D:\MyGame\Game\MathOperation\MathOperation\obj\Debug\netstandard2.0\MathOperatio
 D:\MyGame\Game\MathOperation\MathOperation\obj\Debug\netstandard2.0\MathOperation.csproj.CoreCompileInputs.cache
 D:\MyGame\Game\MathOperation\MathOperation\obj\Debug\netstandard2.0\XamlC.stamp
 C:\Users\s4eka\source\repos\MathOperation\MathOperation\MathOperation\obj\Debug\netstandard2.0\MathOperation.csprojAssemblyReference.cache
+D:\MyGame_1\Game\MathOperation\MathOperation\bin\Debug\netstandard2.0\MathOperation.deps.json
+D:\MyGame_1\Game\MathOperation\MathOperation\bin\Debug\netstandard2.0\MathOperation.dll
+D:\MyGame_1\Game\MathOperation\MathOperation\bin\Debug\netstandard2.0\ref\MathOperation.dll
+D:\MyGame_1\Game\MathOperation\MathOperation\bin\Debug\netstandard2.0\MathOperation.pdb
+D:\MyGame_1\Game\MathOperation\MathOperation\obj\Debug\netstandard2.0\MathOperation.csprojAssemblyReference.cache
+D:\MyGame_1\Game\MathOperation\MathOperation\obj\Debug\netstandard2.0\App.xaml.g.cs
+D:\MyGame_1\Game\MathOperation\MathOperation\obj\Debug\netstandard2.0\MainPage.xaml.g.cs
+D:\MyGame_1\Game\MathOperation\MathOperation\obj\Debug\netstandard2.0\MathOperation.AssemblyInfoInputs.cache
+D:\MyGame_1\Game\MathOperation\MathOperation\obj\Debug\netstandard2.0\MathOperation.AssemblyInfo.cs
+D:\MyGame_1\Game\MathOperation\MathOperation\obj\Debug\netstandard2.0\MathOperation.csproj.CoreCompileInputs.cache
+D:\MyGame_1\Game\MathOperation\MathOperation\obj\Debug\netstandard2.0\XamlC.stamp
+D:\MyGame_1\Game\MathOperation\MathOperation\obj\Debug\netstandard2.0\MathOperation.dll
+D:\MyGame_1\Game\MathOperation\MathOperation\obj\Debug\netstandard2.0\ref\MathOperation.dll
+D:\MyGame_1\Game\MathOperation\MathOperation\obj\Debug\netstandard2.0\MathOperation.pdb

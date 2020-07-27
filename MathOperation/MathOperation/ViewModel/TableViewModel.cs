@@ -69,6 +69,7 @@ namespace MathOperation.ViewModel
                         CellViewModel reallCell = cell as CellViewModel;
                         if (reallCell != null)
                         {
+                            selectedList.ForEach(b => b.Button.BorderColor = Color.Black);
                             if (selectedList.Contains(reallCell))
                             {
                                 selectedList.Remove(reallCell);
@@ -218,6 +219,27 @@ namespace MathOperation.ViewModel
                 }
 
             return null;
+        }
+
+        public CellViewModel FindItem(int n)
+        {
+            for(int i = 0; i < Row; i ++)
+                for(int j = 0; j < Column; j++)
+                {
+                    if (Table[i, j] != null && Table[i, j].Number == n && !Table[i,j].IsSelected)
+                    {
+                        Table[i, j].IsSelected = true;
+                        return Table[i, j];
+                    }
+                        
+                }
+
+            return null;
+        }
+
+        public void ResetSelectedList()
+        {
+            selectedList.Clear();
         }
     }
 }

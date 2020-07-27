@@ -11,6 +11,7 @@ namespace MathOperation.ViewModel
     {
 
         public TableViewModel TableViewModel { get; private set; }
+        public HelpViewModel HelpViewModel { get; private set; }
         public Randomizer Randomizer { get; private set; }
 
         public AddCellViewModel AddCellViewModel { get; private set; }
@@ -45,6 +46,7 @@ namespace MathOperation.ViewModel
         public MainViewModel(int number)
         {
             TableViewModel = new TableViewModel();
+            HelpViewModel = new HelpViewModel();
             Randomizer = new Randomizer(TableViewModel.GetCellCount, number);
             TableViewModel.FillTable(Randomizer.MassRandNumbers.ToList());
 

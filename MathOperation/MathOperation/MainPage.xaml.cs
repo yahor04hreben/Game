@@ -64,18 +64,22 @@ namespace MathOperation
             if (main == null)
             {
                 MainViewModel = new MainViewModel(From);
+                MainViewModel.Randomizer.ChangeFromToNumbers(From, To);
                 MainViewModel.GenerateListButton += GenerateNewButtons;
                 MainViewModel.TableViewModel.RemoveButton += RemoveButton;
             }
             else
             {
                 MainViewModel = main;
+                MainViewModel.Randomizer.ChangeFromToNumbers(From, To);
                 MainViewModel.TimerViewModeal.Resume();
                 MainViewModel.RefreshMainModel(From);
                 MainViewModel.TableViewModel.ResetEvent();
+                MainViewModel.TableViewModel.ResetSelectedList();
                 MainViewModel.TableViewModel.RemoveButton += RemoveButton;
             }
-            MainViewModel.Randomizer.ChangeFromToNumbers(From, To);
+            
+            MainViewModel.HelpViewModel.ClickOnHelpEvent += GetButtonHelp;
 
             if (grid != null)
                 this.grid = grid;
@@ -281,7 +285,8 @@ namespace MathOperation
                 HeightRequest = minorLayoutHight,
                 Margin = new Thickness(5),
                 CornerRadius = StaticResources.RadiusGoal,
-                BackgroundColor = StaticResources.GoalBackgroundColor
+                BackgroundColor = StaticResources.GoalBackgroundColor,
+                Command = MainViewModel.HelpViewModel.ClickOnHelp
             };
 
             if(timerButton == null)
@@ -354,6 +359,28 @@ namespace MathOperation
             {
                 MainViewModel.GenerateNumber(this, EventArgs.Empty);
                 count++;
+            }
+        }
+        
+        private void GetButtonHelp(object sender, EventArgs args)
+        {
+            var helpViewModel = sender as HelpViewModel;
+            var buttonsViewModel = new List<CellViewModel>();
+            var result = new List<List<int>>();
+            var buttons = new List<Button>();
+
+            MainViewModel.Randomizer.GenerateCollection(0, result);
+            if(result.Count != 0)
+            {
+                result[0].ForEach(n => buttonsViewModel.Add(MainViewModel.TableViewModel.FindItem(n)));
+                buttonsViewModel.ForEach(b => b.IsSelected = false);
+
+                buttonsViewModel.ForEach(b => buttons.Add(b.Button));
+                helpViewModel.Buttons = buttons;
+            }
+            else
+            {
+
             }
         }
     }

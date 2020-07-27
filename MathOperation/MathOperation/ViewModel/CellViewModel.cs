@@ -134,6 +134,8 @@ namespace MathOperation.ViewModel
             }
         }
 
+        public bool IsSelected { get; set; }
+
         public CellViewModel()
         {
             cellModel = new CellModel();

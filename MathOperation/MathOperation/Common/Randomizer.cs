@@ -11,7 +11,17 @@ namespace MathOperation.Common
     {
         private Random rand;
 
-        private int DeltaHeader => Goal / 2;
+        private int _DeltaHeader;
+        public int DeltaHeader
+        {
+            get
+            {
+                if (MinValue == 0)
+                    return Goal / 2;
+                else
+                    return Goal - MinValue;
+            }
+        }
 
         public List<int> MassRandNumbers { get; private set; }
 
@@ -166,11 +176,16 @@ namespace MathOperation.Common
 
                 MassRandNumbers.Remove(resultNumber);
 
-                resultNumber = GenerateRandNumber(Goal - DeltaHeader);
+                resultNumber = GenerateRandNumber(MaxValue, MinValue);
+                MassRandNumbers.Add(resultNumber);
+            }
+            if (resultNumber == 0)
+            {
+                resultNumber = GenerateRandNumber(MaxValue, MinValue);
                 MassRandNumbers.Add(resultNumber);
             }
 
-            return resultNumber == 0 ? GenerateRandNumber(Goal - DeltaHeader) : resultNumber;
+            return resultNumber;
         }
 
         private bool IsHasResolves()
@@ -233,9 +248,10 @@ namespace MathOperation.Common
 
         public int GenerateRandNumber(int maxValue, int minValue = 1)
         {
-            if(2 * DeltaHeader - MinValue <= DeltaHeader / 2)
-                return rand.Next(DeltaHeader / 2, DeltaHeader);
-            return rand.Next(1 + DeltaHeader, MinValue - DeltaHeader);
+            if (2 * DeltaHeader > MinValue)
+                return rand.Next(MinValue - DeltaHeader / 2, MinValue + DeltaHeader / 2);
+
+            return rand.Next(1, MinValue - DeltaHeader * 2);
         }
 
 
@@ -244,6 +260,7 @@ namespace MathOperation.Common
             MaxValue = to;
             MinValue = from;
         }
+
         public List<int> GenerateRandCollection(int count)
         {
             var tempList = new List<int>();

@@ -1,2 +1,2 @@
-AdbTarget=-s NXEDU19830005421
+AdbTarget=-s emulator-5554
 AdbOptions=

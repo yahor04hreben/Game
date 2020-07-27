@@ -1100,24 +1100,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\s4eka\\.nuget\\packages\\": {},
+    "C:\\Users\\by_yhreben\\.nuget\\packages\\": {},
     "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\s4eka\\source\\repos\\MathOperation\\MathOperation\\MathOperation.iOS\\MathOperation.iOS.csproj",
+      "projectUniqueName": "D:\\MyGame_1\\Game\\MathOperation\\MathOperation.iOS\\MathOperation.iOS.csproj",
       "projectName": "MathOperation.iOS",
-      "projectPath": "C:\\Users\\s4eka\\source\\repos\\MathOperation\\MathOperation\\MathOperation.iOS\\MathOperation.iOS.csproj",
-      "packagesPath": "C:\\Users\\s4eka\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\s4eka\\source\\repos\\MathOperation\\MathOperation\\MathOperation.iOS\\obj\\",
+      "projectPath": "D:\\MyGame_1\\Game\\MathOperation\\MathOperation.iOS\\MathOperation.iOS.csproj",
+      "packagesPath": "C:\\Users\\by_yhreben\\.nuget\\packages\\",
+      "outputPath": "D:\\MyGame_1\\Game\\MathOperation\\MathOperation.iOS\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\s4eka\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\by_yhreben\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
@@ -1126,13 +1126,16 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://api.nuget.org/v3/index.json": {}
+        "http://packagesource": {},
+        "https://api.nuget.org/v3/index.json": {},
+        "https://bams-aws.refinitiv.com/artifactory/api/nuget/default.nuget.global": {},
+        "https://bams-aws.refinitiv.com/artifactory/api/nuget/default.nuget.local": {}
       },
       "frameworks": {
         "xamarinios10": {
           "projectReferences": {
-            "C:\\Users\\s4eka\\source\\repos\\MathOperation\\MathOperation\\MathOperation\\MathOperation.csproj": {
-              "projectPath": "C:\\Users\\s4eka\\source\\repos\\MathOperation\\MathOperation\\MathOperation\\MathOperation.csproj"
+            "D:\\MyGame_1\\Game\\MathOperation\\MathOperation\\MathOperation.csproj": {
+              "projectPath": "D:\\MyGame_1\\Game\\MathOperation\\MathOperation\\MathOperation.csproj"
             }
           }
         }
