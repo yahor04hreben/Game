@@ -177,10 +177,12 @@ namespace MathOperation
                 WidthRequest = (float)(mainDisplayInfo.Width / mainDisplayInfo.Density) - 10,
                 HeightRequest = goalHeight,
                 CornerRadius = StaticResources.RadiusGoal,
-                Command = addButton.ClickOnAddButton
+                Command = addButton.ClickOnAddButton,
+                BorderWidth = 1
             };
             goalButton.Pressed += OnGoalButtonPressed;
             goalButton.Released += OnGoalButtonReleased;
+            addButton.Button = goalButton;
 
 
             Binding bindingText = new Binding() { Source = goalViewModel, Path = "Number" };
@@ -362,7 +364,7 @@ namespace MathOperation
             }
         }
         
-        private void GetButtonHelp(object sender, EventArgs args)
+        private async void GetButtonHelp(object sender, EventArgs args)
         {
             var helpViewModel = sender as HelpViewModel;
             var buttonsViewModel = new List<CellViewModel>();
@@ -380,7 +382,46 @@ namespace MathOperation
             }
             else
             {
+                var addButton = MainViewModel.AddCellViewModel.Button;
 
+                await AnimationAddButton(addButton);
+            }
+        }
+
+        private async Task<bool> AnimationAddButton(Button button)
+        {
+            button.BorderColor = Color.Goldenrod;
+            button.BorderWidth = 8;
+
+            await button.ScaleTo(1.05, 200);
+            await button.ScaleTo(0.9, 200);
+            await button.ScaleTo(1, 200);
+
+            lock(locker)
+            {
+                button.BorderColor = Color.Black;
+                button.BorderWidth = 1;
+            }
+
+            return true;
+        }
+
+        private RelayCommand _ClickUndo;
+        public RelayCommand ClickUndo
+        {
+            get
+            {
+                if (_ClickUndo == null)
+                    _ClickUndo = new RelayCommand(obj =>
+                    {
+                        if (IsEnabled)
+                        {
+
+                            ();
+                        }
+                    });
+
+                return _ClickUndo;
             }
         }
     }
