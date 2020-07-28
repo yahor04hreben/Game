@@ -11,7 +11,7 @@ namespace MathOperation.Common
         public static Color CellColor => Color.FromArgb(43, 43, 43);
         public static Color CellColorAfterPressed => Color.FromArgb(102, 102, 102);
 
-        public static Color AddCellUnClickable => Color.FromArgb(150, 58, 0);
+        public static Color AddCellUnClickableColor => Color.FromArgb(150, 58, 0);
 
         public static int CellTextSize => 40;
 
