@@ -66,5 +66,17 @@ namespace MathOperation.Helpers
 
             return count;
         }
+
+        public static T[,] CopyTable<T>(this T[,] tableToCopy, int Row, int Column)
+        {
+            var newTable = new T[Row, Column];
+            for (int i = 0; i < Row; i++)
+                for (int j = 0; j < Column; j++)
+                {
+                    newTable[i, j] = tableToCopy[i, j];
+                }
+
+            return newTable;
+        }
     }
 }
