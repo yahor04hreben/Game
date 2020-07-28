@@ -74,7 +74,7 @@ namespace MathOperation.ViewModel
             if (IsClickable)
             {
                 IsClickable = false;
-                ColorClickable = StaticResources.AddCellUnClickable;
+                ColorClickable = StaticResources.AddCellUnClickableColor;
             }
         }
 

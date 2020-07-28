@@ -1,4 +1,5 @@
 ﻿using MathOperation.Common;
+using MathOperation.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,8 @@ namespace MathOperation.ViewModel
         public TableViewModel TableViewModel { get; private set; }
         public HelpViewModel HelpViewModel { get; private set; }
         public Randomizer Randomizer { get; private set; }
+
+        public UndoViewModel UndoViewModel { get; private set; }
 
         public AddCellViewModel AddCellViewModel { get; private set; }
 
@@ -51,11 +54,13 @@ namespace MathOperation.ViewModel
             TableViewModel.FillTable(Randomizer.MassRandNumbers.ToList());
 
             GoalViewModel = new CellViewModel { Number = Randomizer.Goal, Size = StaticResources.GoalTextSize };
-            AddCellViewModel = new AddCellViewModel() { IsClickable = false, ColorClickable = StaticResources.AddCellUnClickable };
+            AddCellViewModel = new AddCellViewModel() { IsClickable = false, ColorClickable = StaticResources.AddCellUnClickableColor };
             ScoreVIewModel = new ScoreVIewModel() { Points = 0 };
 
             AddCellViewModel.GenerateNumberAfteClickAddButton += GenerateNumber;
             TableViewModel.CheckGoalValue += CheckGoalValue;
+
+            UndoViewModel = new UndoViewModel(AddCellViewModel, TableViewModel.Table);
         }
 
         public void RefreshMainModel(int fromNumber)
@@ -116,6 +121,18 @@ namespace MathOperation.ViewModel
             }
             else
                 AddCellViewModel.SetUnClickableButton();
+        }
+
+        private void SetNewTableForUndo(object sender, EventArgs args)
+        {
+            var newTable = sender as CellViewModel[,];
+            UndoViewModel.NewTable = newTable.CopyTable(Row, Column);
+        }
+
+        private void SetOldTableForUndo(object sender, EventArgs args)
+        {
+            var oldTable = sender as CellViewModel[,];
+            UndoViewModel.OldTable = oldTable.CopyTable(Row, Column);
         }
     }
 }

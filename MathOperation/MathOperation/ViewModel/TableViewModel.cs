@@ -19,10 +19,22 @@ namespace MathOperation.ViewModel
         private List<CellViewModel> selectedList;
         public event EventHandler CheckGoalValue;
         public event EventHandler RemoveButton;
+        public event EventHandler SetNewTableUndo;
+        public event EventHandler SetOldTableUndo;
 
         private void RaiseCheckGaolValue(object list, EventArgs args)
         {
             CheckGoalValue?.Invoke(list, args);
+        }
+
+        private void RaiseSetNewTableUndo(object sender, EventArgs args)
+        {
+            SetNewTableUndo?.Invoke(sender, args);
+        }
+
+        private void RaiseSetOldTableUndo(object sender, EventArgs args)
+        {
+            SetOldTableUndo?.Invoke(sender, args);
         }
 
         public void ResetEvent()
@@ -79,8 +91,9 @@ namespace MathOperation.ViewModel
                             {
                                 reallCell.Color = StaticResources.CellColorAfterPressed;
                                 selectedList.Add(reallCell);
-                                RaiseCheckGaolValue(selectedList, EventArgs.Empty);
                             }
+
+                            RaiseCheckGaolValue(selectedList, EventArgs.Empty);
                         }
                     });
                 return _SelectCell;
@@ -193,6 +206,7 @@ namespace MathOperation.ViewModel
 
         public void TranslateCellsFromTable(List<CellViewModel> column)
         {
+            RaiseSetOldTableUndo(Table, EventArgs.Empty);
             Table.ClearColumn(column.First().Column, Row);
             column.ForEach(c =>
             {
@@ -207,6 +221,8 @@ namespace MathOperation.ViewModel
                     Table[c.Row, c.Column] = c;
                 }
             });
+
+            RaiseSetNewTableUndo(Table, EventArgs.Empty);
         }
 
         public Point? GetLowestCellPoint()

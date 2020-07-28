@@ -45,7 +45,7 @@ namespace MathOperation.ViewModel
              await b.ScaleTo(0.9, 200);
              await b.ScaleTo(1.1, 200);
 
-             lock(locker)
+             lock(locker)       
              {
                   b.BorderColor = Color.Black;
              }
