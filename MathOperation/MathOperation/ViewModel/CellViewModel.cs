@@ -143,7 +143,17 @@ namespace MathOperation.ViewModel
 
         public CellViewModel(CellViewModel oldCell)
         {
-
+            this.cellModel = new CellModel();
+            this.Button = oldCell.Button;
+            this.Color = oldCell.Color;
+            this.Column = oldCell.Column;
+            this.IsSelected = oldCell.IsSelected;
+            this.Index = oldCell.Index;
+            this.IsVisible = oldCell.IsVisible;
+            this.Number = oldCell.Number;
+            this.Row = oldCell.Row;
+            this.Size = oldCell.Size;
+            this.SkipRow = oldCell.SkipRow;
         }
     }
 }

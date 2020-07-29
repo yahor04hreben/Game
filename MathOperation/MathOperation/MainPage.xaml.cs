@@ -197,8 +197,11 @@ namespace MathOperation
         private void GenerateNewButtons(object twoList, EventArgs args)
         {
             List<CellViewModel> selectedCells = twoList as List<CellViewModel>;
+            MainViewModel.SetOldTableForUndo(MainViewModel.TableViewModel.Table, EventArgs.Empty);
+
             if(selectedCells != null)
             {
+                MainViewModel.UndoViewModel.AddToOldSelectedList(selectedCells);
                 MainViewModel.TableViewModel.RemoveCellAndAddFallLDown(selectedCells, cellHeight);
             }
             else
@@ -207,8 +210,11 @@ namespace MathOperation
                 var newCellViewModel = MainViewModel.TableViewModel.CreaderNewCell(listInt[0], listInt[2]);
                 newCellViewModel.SkipRow = listInt[1];
                 newCellViewModel.Button = CreateButton(newCellViewModel, 0, listInt[2]);
+                MainViewModel.UndoViewModel.AddToOldSelectedList(new List<CellViewModel> { newCellViewModel });
                 MainViewModel.TableViewModel.RaiseTransleteCells(new List<CellViewModel>() { newCellViewModel }, cellHeight);
             }
+
+            MainViewModel.SetNewTableForUndo(MainViewModel.TableViewModel.Table, EventArgs.Empty);
         }
 
         private Button CreateButton(CellViewModel currentCell,int i, int j)
@@ -311,9 +317,10 @@ namespace MathOperation
                 WidthRequest = StaticResources.Width * 0.3,
                 CornerRadius = StaticResources.RadiusGoal,
                 BackgroundColor = StaticResources.GoalBackgroundColor,
-                Text = "Set Range"
+                Text = "Set Range",
+                Command = ClickUndo
             };
-            setNumbers.Clicked += SetNumbersButton_Click;
+            //setNumbers.Clicked += SetNumbersButton_Click;
             
 
 
@@ -416,8 +423,39 @@ namespace MathOperation
                     {
                         if (IsEnabled)
                         {
+                            var cells = MainViewModel.UndoViewModel.GetTranslateCells(MainViewModel.Row, MainViewModel.Column);
+                            
+                            var list = new List<CellViewModel>();
 
-                            ();
+                            foreach(var d in cells)
+                            {
+                                var cell = d.Key;
+                                cell.SkipRow += d.Value;
+                                cell.Row += d.Value;
+                                list.Add(cell);
+                            }
+                            MainViewModel.TableViewModel.RaiseTransleteCells(list, cellHeight);
+                            MainViewModel.TableViewModel.ReFillTable(cells.Keys.ToList());
+
+                            var selectedList = MainViewModel.UndoViewModel.GetOldSelectedList(MainViewModel.Row, MainViewModel.Column);
+                            if(selectedList.Count == 0 && MainViewModel.UndoViewModel.OldSelectedList.Count != 0)
+                            {
+                                var tempList = MainViewModel.UndoViewModel.OldSelectedList;
+                                RemoveChildFromGrid(tempList);
+                                MainViewModel.TableViewModel.ReFillTable(tempList, true);
+                            }
+
+                            foreach (var c in selectedList)
+                            {
+                                c.IsVisible = true;
+                                c.Color = StaticResources.CellColor;
+                                CreateButton(c, 0, c.Column);
+                            }
+                            MainViewModel.TableViewModel.RaiseTransleteCells(selectedList, cellHeight);
+                            MainViewModel.TableViewModel.ReFillTable(selectedList);
+                            MainViewModel.Randomizer.MassRandNumbers.AddRange(selectedList.Select(c => c.Number));
+                            MainViewModel.GoalViewModel.Number = MainViewModel.UndoViewModel.OldGoal;
+                            MainViewModel.Randomizer.Goal = MainViewModel.UndoViewModel.OldGoal;
                         }
                     });
 

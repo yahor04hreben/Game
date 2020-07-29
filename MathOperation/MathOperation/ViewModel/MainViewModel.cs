@@ -60,7 +60,7 @@ namespace MathOperation.ViewModel
             AddCellViewModel.GenerateNumberAfteClickAddButton += GenerateNumber;
             TableViewModel.CheckGoalValue += CheckGoalValue;
 
-            UndoViewModel = new UndoViewModel(AddCellViewModel, TableViewModel.Table);
+            UndoViewModel = new UndoViewModel(AddCellViewModel, TableViewModel.Table) { OldGoal = GoalViewModel.Number};
         }
 
         public void RefreshMainModel(int fromNumber)
@@ -100,6 +100,7 @@ namespace MathOperation.ViewModel
                     ScoreVIewModel.AddPoints(selectedList.Select(c => c.Number).ToList());
                     selectedList.Clear();
 
+                    UndoViewModel.OldGoal = GoalViewModel.Number;
                     int randNumber = Randomizer.GetNewGoalValue();
                     GoalViewModel.Number = randNumber;
                 }
@@ -123,16 +124,18 @@ namespace MathOperation.ViewModel
                 AddCellViewModel.SetUnClickableButton();
         }
 
-        private void SetNewTableForUndo(object sender, EventArgs args)
+        public void SetNewTableForUndo(object sender, EventArgs args)
         {
             var newTable = sender as CellViewModel[,];
             UndoViewModel.NewTable = newTable.CopyTable(Row, Column);
         }
 
-        private void SetOldTableForUndo(object sender, EventArgs args)
+        public void SetOldTableForUndo(object sender, EventArgs args)
         {
             var oldTable = sender as CellViewModel[,];
             UndoViewModel.OldTable = oldTable.CopyTable(Row, Column);
         }
+
+
     }
 }

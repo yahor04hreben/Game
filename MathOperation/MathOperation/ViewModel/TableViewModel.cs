@@ -118,7 +118,7 @@ namespace MathOperation.ViewModel
                 {
                     columns.Where(c => c.Row < cell.Row).ForEach(c => c.SkipRow++);
                 });
-                columns.Where(c => cells.Contains(c)).ForEach(c => c.IsVisible = false);
+                columns.Where(c => cells.FirstOrDefault(newC => c.Index == newC.Index) != null).ForEach(c => c.IsVisible = false);
 
                 for(int i = 0; i < columnRowBefore.Count(); i++)
                 {
@@ -158,12 +158,16 @@ namespace MathOperation.ViewModel
 
         private CellViewModel CreateCellViewModedel(int number, int i, int j, int skip = 0)
         {
+            int index = -1;
+            if (Table.NotEmpty(Row, Column))
+                index = Table.GetTableAsList(Row, Column).ToList().Where(c => c != null).Max(c => c.Index);
+
             return new CellViewModel()
             {
                 Number = number,
                 Row = i,
                 Column = j,
-                Index = i * Column + j,
+                Index = index + 1,
                 Color = StaticResources.CellColor,
                 Size = StaticResources.CellTextSize,
                 SkipRow = skip,
@@ -206,7 +210,6 @@ namespace MathOperation.ViewModel
 
         public void TranslateCellsFromTable(List<CellViewModel> column)
         {
-            RaiseSetOldTableUndo(Table, EventArgs.Empty);
             Table.ClearColumn(column.First().Column, Row);
             column.ForEach(c =>
             {
@@ -221,8 +224,6 @@ namespace MathOperation.ViewModel
                     Table[c.Row, c.Column] = c;
                 }
             });
-
-            RaiseSetNewTableUndo(Table, EventArgs.Empty);
         }
 
         public Point? GetLowestCellPoint()
@@ -235,6 +236,17 @@ namespace MathOperation.ViewModel
                 }
 
             return null;
+        }
+
+        public void ReFillTable(List<CellViewModel> listOfCell, bool toRemove = false)
+        {
+            foreach(var c in listOfCell)
+            {
+                if (!toRemove)
+                    Table[c.Row, c.Column] = new CellViewModel(c);
+                else
+                    Table[c.Row, c.Column] = null;
+            }
         }
 
         public CellViewModel FindItem(int n)
