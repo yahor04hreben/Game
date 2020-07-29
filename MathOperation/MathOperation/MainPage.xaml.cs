@@ -203,11 +203,14 @@ namespace MathOperation
             {
                 MainViewModel.UndoViewModel.AddToOldSelectedList(selectedCells);
                 MainViewModel.TableViewModel.RemoveCellAndAddFallLDown(selectedCells, cellHeight);
+
+                MainViewModel.UndoViewModel.OldSelectedList = selectedCells;
             }
             else
             {
                 var listInt = twoList as List<int>;
                 var newCellViewModel = MainViewModel.TableViewModel.CreaderNewCell(listInt[0], listInt[2]);
+                MainViewModel.UndoViewModel.NewGeneratedList.Add(newCellViewModel);
                 newCellViewModel.SkipRow = listInt[1];
                 newCellViewModel.Button = CreateButton(newCellViewModel, 0, listInt[2]);
                 MainViewModel.UndoViewModel.AddToOldSelectedList(new List<CellViewModel> { newCellViewModel });
