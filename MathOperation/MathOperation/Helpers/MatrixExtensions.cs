@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MathOperation.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -67,13 +68,13 @@ namespace MathOperation.Helpers
             return count;
         }
 
-        public static T[,] CopyTable<T>(this T[,] tableToCopy, int Row, int Column)
+        public static CellViewModel[,] CopyTable(this CellViewModel[,] tableToCopy, int Row, int Column)
         {
-            var newTable = new T[Row, Column];
+            var newTable = new CellViewModel[Row, Column];
             for (int i = 0; i < Row; i++)
                 for (int j = 0; j < Column; j++)
                 {
-                    newTable[i, j] = tableToCopy[i, j];
+                    newTable[i, j] = tableToCopy[i,j] == null ? null : new CellViewModel(tableToCopy[i, j]);
                 }
 
             return newTable;

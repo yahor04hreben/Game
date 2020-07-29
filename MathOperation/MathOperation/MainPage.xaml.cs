@@ -197,18 +197,24 @@ namespace MathOperation
         private void GenerateNewButtons(object twoList, EventArgs args)
         {
             List<CellViewModel> selectedCells = twoList as List<CellViewModel>;
-            if(selectedCells != null)
+            MainViewModel.TableViewModel.RaiseSetOldTableUndo(MainViewModel.TableViewModel.Table, EventArgs.Empty);
+            if (selectedCells != null)
             {
                 MainViewModel.TableViewModel.RemoveCellAndAddFallLDown(selectedCells, cellHeight);
+
+                MainViewModel.UndoViewModel.OldSelectedList = selectedCells;
             }
             else
             {
                 var listInt = twoList as List<int>;
                 var newCellViewModel = MainViewModel.TableViewModel.CreaderNewCell(listInt[0], listInt[2]);
+                MainViewModel.UndoViewModel.NewGeneratedList.Add(newCellViewModel);
                 newCellViewModel.SkipRow = listInt[1];
                 newCellViewModel.Button = CreateButton(newCellViewModel, 0, listInt[2]);
                 MainViewModel.TableViewModel.RaiseTransleteCells(new List<CellViewModel>() { newCellViewModel }, cellHeight);
             }
+
+            MainViewModel.TableViewModel.RaiseSetNewTableUndo(MainViewModel.TableViewModel.Table, EventArgs.Empty);
         }
 
         private Button CreateButton(CellViewModel currentCell,int i, int j)
@@ -311,9 +317,10 @@ namespace MathOperation
                 WidthRequest = StaticResources.Width * 0.3,
                 CornerRadius = StaticResources.RadiusGoal,
                 BackgroundColor = StaticResources.GoalBackgroundColor,
-                Text = "Set Range"
+                Text = "Set Range",
+                Command = ClickUndo
             };
-            setNumbers.Clicked += SetNumbersButton_Click;
+            //setNumbers.Clicked += SetNumbersButton_Click;
             
 
 
@@ -417,7 +424,6 @@ namespace MathOperation
                         if (IsEnabled)
                         {
 
-                            ();
                         }
                     });
 

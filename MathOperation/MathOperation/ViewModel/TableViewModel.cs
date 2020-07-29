@@ -27,12 +27,12 @@ namespace MathOperation.ViewModel
             CheckGoalValue?.Invoke(list, args);
         }
 
-        private void RaiseSetNewTableUndo(object sender, EventArgs args)
+        public void RaiseSetNewTableUndo(object sender, EventArgs args)
         {
             SetNewTableUndo?.Invoke(sender, args);
         }
 
-        private void RaiseSetOldTableUndo(object sender, EventArgs args)
+        public void RaiseSetOldTableUndo(object sender, EventArgs args)
         {
             SetOldTableUndo?.Invoke(sender, args);
         }
@@ -42,7 +42,7 @@ namespace MathOperation.ViewModel
             RemoveButton = null;
         }
 
-        private void RaiseRemoveButton(object list, EventArgs args)
+        public void RaiseRemoveButton(object list, EventArgs args)
         {
             RemoveButton?.Invoke(list, args);
         }
@@ -108,6 +108,7 @@ namespace MathOperation.ViewModel
                                 group cell by cell.Column;
 
             var taskList = new List<Task>();
+            
             foreach (var cells in CellsByColumn)
             {
                 var columns = Table.GetColumn(cells.Key);
@@ -206,7 +207,6 @@ namespace MathOperation.ViewModel
 
         public void TranslateCellsFromTable(List<CellViewModel> column)
         {
-            RaiseSetOldTableUndo(Table, EventArgs.Empty);
             Table.ClearColumn(column.First().Column, Row);
             column.ForEach(c =>
             {
@@ -221,8 +221,6 @@ namespace MathOperation.ViewModel
                     Table[c.Row, c.Column] = c;
                 }
             });
-
-            RaiseSetNewTableUndo(Table, EventArgs.Empty);
         }
 
         public Point? GetLowestCellPoint()

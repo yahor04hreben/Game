@@ -8,7 +8,7 @@ namespace MathOperation.ViewModel
 {
     public class UndoViewModel : AbstractViewModel
     {
-        public AddCellViewModel OldAddCell { get; private set; }
+        public int OldAddCell { get;  set; }
         public List<CellViewModel> OldSelectedList { get; set; }
         public List<CellViewModel> NewGeneratedList { get; set; }
         public CellViewModel[,] OldTable { get; set; }
@@ -35,21 +35,15 @@ namespace MathOperation.ViewModel
 
         public UndoViewModel(CellViewModel[,] oldTable)
         {
-            OldAddCell = new AddCellViewModel();
             OldSelectedList = new List<CellViewModel>();
+            NewGeneratedList = new List<CellViewModel>();
             OldTable = oldTable;
         }
 
-        public UndoViewModel(AddCellViewModel oldAddCell, CellViewModel[,] oldTable)
+        public UndoViewModel( List<CellViewModel> selectedList, CellViewModel[,] oldTable)
         {
-            OldAddCell = oldAddCell;
-            OldTable = oldTable;
-        }
-
-        public UndoViewModel(AddCellViewModel oldAddCell, List<CellViewModel> selectedList, CellViewModel[,] oldTable)
-        {
-            OldAddCell = oldAddCell;
             OldSelectedList = selectedList;
+            NewGeneratedList = new List<CellViewModel>();
             OldTable = oldTable;
         }
 

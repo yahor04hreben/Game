@@ -1,24 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\MyGame_1\\Game\\MathOperation\\MathOperation.Android\\MathOperation.Android.csproj": {}
+    "C:\\Users\\s4eka\\source\\repos\\MathOperation\\MathOperation\\MathOperation.Android\\MathOperation.Android.csproj": {}
   },
   "projects": {
-    "D:\\MyGame_1\\Game\\MathOperation\\MathOperation.Android\\MathOperation.Android.csproj": {
+    "C:\\Users\\s4eka\\source\\repos\\MathOperation\\MathOperation\\MathOperation.Android\\MathOperation.Android.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\MyGame_1\\Game\\MathOperation\\MathOperation.Android\\MathOperation.Android.csproj",
+        "projectUniqueName": "C:\\Users\\s4eka\\source\\repos\\MathOperation\\MathOperation\\MathOperation.Android\\MathOperation.Android.csproj",
         "projectName": "MathOperation.Android",
-        "projectPath": "D:\\MyGame_1\\Game\\MathOperation\\MathOperation.Android\\MathOperation.Android.csproj",
-        "packagesPath": "C:\\Users\\by_yhreben\\.nuget\\packages\\",
-        "outputPath": "D:\\MyGame_1\\Game\\MathOperation\\MathOperation.Android\\obj\\",
+        "projectPath": "C:\\Users\\s4eka\\source\\repos\\MathOperation\\MathOperation\\MathOperation.Android\\MathOperation.Android.csproj",
+        "packagesPath": "C:\\Users\\s4eka\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\s4eka\\source\\repos\\MathOperation\\MathOperation\\MathOperation.Android\\obj\\",
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
-          "C:\\Users\\by_yhreben\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\s4eka\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
@@ -27,16 +27,13 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "http://packagesource": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://bams-aws.refinitiv.com/artifactory/api/nuget/default.nuget.global": {},
-          "https://bams-aws.refinitiv.com/artifactory/api/nuget/default.nuget.local": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "monoandroid90": {
             "projectReferences": {
-              "D:\\MyGame_1\\Game\\MathOperation\\MathOperation\\MathOperation.csproj": {
-                "projectPath": "D:\\MyGame_1\\Game\\MathOperation\\MathOperation\\MathOperation.csproj"
+              "C:\\Users\\s4eka\\source\\repos\\MathOperation\\MathOperation\\MathOperation\\MathOperation.csproj": {
+                "projectPath": "C:\\Users\\s4eka\\source\\repos\\MathOperation\\MathOperation\\MathOperation\\MathOperation.csproj"
               }
             }
           }
@@ -57,21 +54,20 @@
         }
       }
     },
-    "D:\\MyGame_1\\Game\\MathOperation\\MathOperation\\MathOperation.csproj": {
+    "C:\\Users\\s4eka\\source\\repos\\MathOperation\\MathOperation\\MathOperation\\MathOperation.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\MyGame_1\\Game\\MathOperation\\MathOperation\\MathOperation.csproj",
+        "projectUniqueName": "C:\\Users\\s4eka\\source\\repos\\MathOperation\\MathOperation\\MathOperation\\MathOperation.csproj",
         "projectName": "MathOperation",
-        "projectPath": "D:\\MyGame_1\\Game\\MathOperation\\MathOperation\\MathOperation.csproj",
-        "packagesPath": "C:\\Users\\by_yhreben\\.nuget\\packages\\",
-        "outputPath": "D:\\MyGame_1\\Game\\MathOperation\\MathOperation\\obj\\",
+        "projectPath": "C:\\Users\\s4eka\\source\\repos\\MathOperation\\MathOperation\\MathOperation\\MathOperation.csproj",
+        "packagesPath": "C:\\Users\\s4eka\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\s4eka\\source\\repos\\MathOperation\\MathOperation\\MathOperation\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
-          "C:\\Users\\by_yhreben\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\s4eka\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
@@ -80,10 +76,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "http://packagesource": {},
-          "https://api.nuget.org/v3/index.json": {},
-          "https://bams-aws.refinitiv.com/artifactory/api/nuget/default.nuget.global": {},
-          "https://bams-aws.refinitiv.com/artifactory/api/nuget/default.nuget.local": {}
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netstandard2.0": {
@@ -128,7 +121,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.300\\RuntimeIdentifierGraph.json"
         }
       }
     }
