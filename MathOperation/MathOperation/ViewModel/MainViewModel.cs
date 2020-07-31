@@ -62,7 +62,7 @@ namespace MathOperation.ViewModel
             TableViewModel.SetNewTableUndo += SetNewTableForUndo;
             TableViewModel.SetOldTableUndo += SetOldTableForUndo;
 
-            UndoViewModel = new UndoViewModel(AddCellViewModel, TableViewModel.Table) { OldGoal = GoalViewModel.Number};
+            UndoViewModel = new UndoViewModel(TableViewModel.Table) { OldGoal = GoalViewModel.Number};
         }
 
         public void RefreshMainModel(int fromNumber)
@@ -92,6 +92,8 @@ namespace MathOperation.ViewModel
             {
                 if(selectedList.Sum(s => s.Number) == GoalViewModel.Number)
                 {
+                    UndoViewModel.SetEnabled();
+
                     UndoViewModel.NewGeneratedList.Clear();
                     UndoViewModel.OldAddCell = GoalViewModel.Number;
                     selectedList.ForEach(c => {

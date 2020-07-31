@@ -41,22 +41,18 @@ namespace MathOperation.ViewModel
             OldSelectedList = new List<CellViewModel>();
             NewGeneratedList = new List<CellViewModel>();
             OldTable = oldTable;
+
+            SetUnEnabled();
         }
 
-        public UndoViewModel( List<CellViewModel> selectedList, CellViewModel[,] oldTable)
+        public UndoViewModel( List<CellViewModel> selectedList, CellViewModel[,] oldTable) : this(oldTable)
         {
             OldSelectedList = new List<CellViewModel>();
-
-            OldAddCell = oldAddCell;
-            OldTable = oldTable;
         }
 
-        public UndoViewModel(AddCellViewModel oldAddCell, List<CellViewModel> selectedList, CellViewModel[,] oldTable)
+        public UndoViewModel(AddCellViewModel oldAddCell, List<CellViewModel> selectedList, CellViewModel[,] oldTable) : this(selectedList, oldTable)
         {
-            OldAddCell = oldAddCell;
-            OldSelectedList = selectedList;
             NewGeneratedList = new List<CellViewModel>();
-            OldTable = oldTable;
         }
 
         

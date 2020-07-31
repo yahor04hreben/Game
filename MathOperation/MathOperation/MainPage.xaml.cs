@@ -203,8 +203,6 @@ namespace MathOperation
             {
                 MainViewModel.UndoViewModel.AddToOldSelectedList(selectedCells);
                 MainViewModel.TableViewModel.RemoveCellAndAddFallLDown(selectedCells, cellHeight);
-
-                MainViewModel.UndoViewModel.OldSelectedList = selectedCells;
             }
             else
             {
@@ -319,12 +317,13 @@ namespace MathOperation
                 Margin = new Thickness(5),
                 WidthRequest = StaticResources.Width * 0.3,
                 CornerRadius = StaticResources.RadiusGoal,
-                BackgroundColor = StaticResources.GoalBackgroundColor,
-                Text = "Set Range",
+                Text = "Undo",
                 Command = ClickUndo
             };
             //setNumbers.Clicked += SetNumbersButton_Click;
-            
+
+            Binding colorBind = new Binding { Source = MainViewModel.UndoViewModel, Path = "Color" };
+            setNumbers.SetBinding(Button.BackgroundColorProperty, colorBind);
 
 
             minorLayout.Children.Add(timerButton);
@@ -349,6 +348,7 @@ namespace MathOperation
 
         private void OnGoalButtonPressed(object sender, EventArgs args)
         {
+            stopWatch = new Stopwatch();
             stopWatch.Start();
             animatiomInProgress = true;
         }
@@ -424,7 +424,7 @@ namespace MathOperation
                 if (_ClickUndo == null)
                     _ClickUndo = new RelayCommand(obj =>
                     {
-                        if (IsEnabled)
+                        if (MainViewModel.UndoViewModel.IsEnabled)
                         {
                             var cells = MainViewModel.UndoViewModel.GetTranslateCells(MainViewModel.Row, MainViewModel.Column);
                             
@@ -459,6 +459,8 @@ namespace MathOperation
                             MainViewModel.Randomizer.MassRandNumbers.AddRange(selectedList.Select(c => c.Number));
                             MainViewModel.GoalViewModel.Number = MainViewModel.UndoViewModel.OldGoal;
                             MainViewModel.Randomizer.Goal = MainViewModel.UndoViewModel.OldGoal;
+
+                            MainViewModel.UndoViewModel.SetUnEnabled();
                         }
                     });
 
