@@ -88,7 +88,8 @@ namespace MathOperation.Helpers
                 for (int i = 0; i < Row; i++)
                     for (int j = 0; j < Column; j++)
                     {
-                        resultList.Add(table[i, j]);
+                        if(table[i,j] != null)
+                            resultList.Add(table[i, j]);
                     }
             }
            

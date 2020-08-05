@@ -109,10 +109,10 @@ namespace MathOperation.Common
 
         public void FillListOfRandNumber()
         {
-            MassRandNumbers = GenerateRandomNumber();
+            MassRandNumbers = GenerateRandomNumbers();
         }
 
-        private List<int> GenerateRandomNumber()
+        private List<int> GenerateRandomNumbers()
         {
             return GenerateRandomNumber(Count);
         }
@@ -255,10 +255,13 @@ namespace MathOperation.Common
         }
 
 
-        public void ChangeFromToNumbers(int from, int to)
+        public void ChangeFromToNumbers(int from, int to, List<int> list = null)
         {
             MaxValue = to;
             MinValue = from;
+
+            if (list != null)
+                MassRandNumbers = list;
         }
 
         public List<int> GenerateRandCollection(int count)

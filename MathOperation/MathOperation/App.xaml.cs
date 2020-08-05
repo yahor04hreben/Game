@@ -7,12 +7,12 @@ namespace MathOperation
 {
     public partial class App : Application
     {
-        public MainPage _MainPage;
+        public MenuPage _MenuPage;
         public App()
         {
             InitializeComponent();
-            _MainPage = new MainPage(string.Empty, string.Empty);
-            MainPage = new NavigationPage(_MainPage);
+            _MenuPage = new MenuPage();
+            MainPage =  new NavigationPage(_MenuPage);
         }
 
         protected override void OnStart()

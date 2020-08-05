@@ -17,6 +17,13 @@ namespace MathOperation.ViewModel
             Timer.Start();
         }
 
+        public TimerViewModeal(TimerViewModeal tv)
+        {
+            this.Timer = tv.Timer;
+            this.Seconds = tv.Seconds;
+            this.Minutes = tv.Minutes;
+        }
+
         private int _Seconds;
         public int Seconds
         {
@@ -45,18 +52,22 @@ namespace MathOperation.ViewModel
         }
         public void Start()
         {
+            Seconds = 0;
+            Minutes = 0;
+
+            IsStoped = false;
             Timer.Enabled = true;
             Timer.Interval = 1000;
             Timer.Start();
         }
 
-        public void  Colapse()
+        public void Colapse()
         {
             Timer.Stop();
             Timer.Dispose();
         }
 
-        public void  Increment()
+        public void Increment()
         {
             if(!IsStoped)
                 Seconds++;
@@ -67,7 +78,7 @@ namespace MathOperation.ViewModel
             IsStoped = true;
         }
 
-        public void  Resume()
+        public void Resume()
         {
             IsStoped = false;
         }

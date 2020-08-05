@@ -27,14 +27,15 @@ namespace MathOperation.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             app = new App();
             LoadApplication(app);
-            app._MainPage.RefreshTimer += RefreshTimer;
+            if(app._MenuPage.MainPage != null)
+            {
+                app._MenuPage.MainPage.RefreshTimer += RefreshTimer;
 
-            button = app._MainPage.timerButton;
-            Timer = app._MainPage.MainViewModel.TimerViewModeal;
-            Timer.Timer.Elapsed += Timer_Elapsed;
-
-            Timer.Start();
-
+                button = app._MenuPage.MainPage.timerButton;
+                Timer = app._MenuPage.MainPage.MainViewModel.TimerViewModeal;
+                Timer.Timer.Elapsed += Timer_Elapsed;
+                Timer.IsStoped = true;
+            }
         }
 
         private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)

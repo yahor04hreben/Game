@@ -60,7 +60,7 @@ namespace MathOperation.ViewModel
         {
             for (int i = 0; i < Row; i++)
                 for (int j = 0; j < Column; j++)
-                    Table[i, j] = CreateCellViewModedel(numberOfList[i * Column + j], i, j);
+                    Table[i, j] = i * Column + j >= numberOfList.Count? null : CreateCellViewModedel(numberOfList[i * Column + j], i, j);
         }
 
         public int GetCellCount => Row * Column;
@@ -269,6 +269,11 @@ namespace MathOperation.ViewModel
         public void ResetSelectedList()
         {
             selectedList.Clear();
+        }
+
+        public List<CellViewModel> GetTableAsList()
+        {
+            return Table.GetTableAsList(Row, Column).ToList();
         }
     }
 }

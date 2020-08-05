@@ -65,19 +65,25 @@ namespace MathOperation.ViewModel
             UndoViewModel = new UndoViewModel(TableViewModel.Table) { OldGoal = GoalViewModel.Number};
         }
 
-        public void RefreshMainModel(int fromNumber)
+        public void RefreshMainModel(int fromNumber, bool isStartGame = false)
         {
+
             Randomizer.Goal = fromNumber;
-            Randomizer.FillListOfRandNumber();
-            TableViewModel.FillTable(Randomizer.MassRandNumbers.ToList());
+
+            if(isStartGame)
+                ReFillTable(false);
+
             GoalViewModel.Number = fromNumber;
         }
 
-        public void ReFillTable()
+        public void ReFillTable(bool changeGoal = true)
         {
-            int goal = Randomizer.GetNewGoalValue();
-            Randomizer.Goal = goal;
-            GoalViewModel.Number = goal;
+            if(changeGoal)
+            {
+                int goal = Randomizer.GetNewGoalValue();
+                Randomizer.Goal = goal;
+                GoalViewModel.Number = goal;
+            }
             Randomizer.FillListOfRandNumber();
             TableViewModel.FillTable(Randomizer.MassRandNumbers.ToList());
         }
@@ -141,7 +147,5 @@ namespace MathOperation.ViewModel
             var oldTable = sender as CellViewModel[,];
             UndoViewModel.OldTable = oldTable.CopyTable(Row, Column);
         }
-
-
     }
 }

@@ -22,7 +22,7 @@ namespace MathOperation
     public partial class MainPage : ContentPage
     {
         public MainViewModel MainViewModel { get;  set; }
-        public Grid grid { get; private set; }
+        public Grid grid { get; set; }
 
         public Label label { get; private set; }
 
@@ -46,17 +46,36 @@ namespace MathOperation
         private bool animatiomInProgress = false;
         Stopwatch stopWatch = new Stopwatch();
 
+
+        private bool isSecondClick = false;
+        private bool _IsStart;
+        public bool IsStart
+        {
+            get => _IsStart;
+            set
+            {
+                _IsStart = value;
+                if(_IsStart && isSecondClick)
+                {
+                    grid.Children.Clear();
+                    MainViewModel.RefreshMainModel(From, true);
+                    ResetTableViewModel();
+                    CreateMainView();
+                }
+            }
+        }
+
         private void RaiseRefreshTimer(object sender, EventArgs args)
         {
             RefreshTimer?.Invoke(sender, args);
         }
-        public MainPage(string from, string to, MainViewModel  main = null, Button timerButton = null, Grid grid = null)
+        public MainPage(string from, string to, MainViewModel  main = null, Button timerButton = null, Grid grid = null, int goal = -1)
         {
-            if(from == string.Empty && to == string.Empty)
-            {
+             if(from == string.Empty && to == string.Empty)
+             {
                 From = 30;
                 To = 40;
-            }
+             }
 
             InitializeComponent();
             ParseNumber(from, to);
@@ -70,13 +89,13 @@ namespace MathOperation
             }
             else
             {
+                isSecondClick = true;
+                var randomList = grid == null ? null : main.Randomizer.MassRandNumbers.Select(i => i).ToList();
                 MainViewModel = main;
-                MainViewModel.Randomizer.ChangeFromToNumbers(From, To);
+                MainViewModel.Randomizer.ChangeFromToNumbers(From, To, randomList);
+                MainViewModel.RefreshMainModel(goal <= 0 ? From : goal, IsStart);
                 MainViewModel.TimerViewModeal.Resume();
-                MainViewModel.RefreshMainModel(From);
-                MainViewModel.TableViewModel.ResetEvent();
-                MainViewModel.TableViewModel.ResetSelectedList();
-                MainViewModel.TableViewModel.RemoveButton += RemoveButton;
+                ResetTableViewModel();
             }
             
             MainViewModel.HelpViewModel.ClickOnHelpEvent += GetButtonHelp;
@@ -92,6 +111,16 @@ namespace MathOperation
             NavigationPage.SetHasNavigationBar(this, false);
 
             CreateMainView();
+
+            IsStart = false;
+        }
+
+        private void ResetTableViewModel()
+        {
+            MainViewModel.TableViewModel.ResetEvent();
+            MainViewModel.TableViewModel.ResetSelectedList();
+            MainViewModel.TableViewModel.RemoveButton += RemoveButton;
+            MainViewModel.TableViewModel.ReFillTable(MainViewModel.TableViewModel.GetTableAsList());
         }
 
         private void ParseNumber(string from, string to)
@@ -128,11 +157,8 @@ namespace MathOperation
                     grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = cellWidth });
                 }
             }
-            else
-            {
-                grid.Children.Clear();
-            }
 
+            grid.Children.Clear();
             FillGrid();
         }
 
@@ -144,10 +170,13 @@ namespace MathOperation
                 for (int j = 0; j < MainViewModel.Column; j++)
                 {
                     CellViewModel currentCell = MainViewModel.TableViewModel.GetNumberByIndexes(i, j);
-                    currentCell.SkipRow = i;
-                    CreateButton(currentCell, 0, j);
+                    if(currentCell != null)
+                    {
+                        currentCell.SkipRow = i;
+                        CreateButton(currentCell, 0, j);
 
-                    listOfCells.Add(currentCell);
+                        listOfCells.Add(currentCell);
+                    }
                 }
             }
 
@@ -299,6 +328,7 @@ namespace MathOperation
             };
 
             if(timerButton == null)
+            {
                 timerButton = new Button()
                 {
                     TextColor = StaticResources.ColorGoalText,
@@ -306,8 +336,12 @@ namespace MathOperation
                     HeightRequest = minorLayoutHight,
                     Margin = new Thickness(5),
                     CornerRadius = StaticResources.RadiusGoal,
-                    BackgroundColor = StaticResources.GoalBackgroundColor
+                    BackgroundColor = StaticResources.GoalBackgroundColor,
+                    Command = ClickOnTimerCommand
                 };
+               // timerButton.Clicked += ClickOnTimer;
+            }
+                
 
             Button setNumbers = new Button()
             {
@@ -466,6 +500,37 @@ namespace MathOperation
 
                 return _ClickUndo;
             }
+        }
+
+        private async void ClickOnTimer(object sender, EventArgs args)
+        {
+            await Navigation.PushAsync(new MenuPage(timerButton, MainViewModel));
+        }
+
+        private RelayCommand _ClickOnTimerCommand;
+        public RelayCommand ClickOnTimerCommand
+        {
+            get
+            {
+                if (_ClickOnTimerCommand == null)
+                    _ClickOnTimerCommand = new RelayCommand(obj =>
+                    {
+                        Navigation.PushAsync(new MenuPage(timerButton, MainViewModel, grid, MainViewModel.Randomizer.Goal));
+                        MainViewModel.TimerViewModeal.Stop();
+                        ReFillMinorLatoutChildren();
+                    });
+                return _ClickOnTimerCommand;
+            }
+        }
+            
+        private void ReFillMinorLatoutChildren()
+        {
+            Button[] tempChild = new Button[2];
+            (mainLayout.Children[0] as StackLayout).Children.CopyTo(tempChild, 0);
+            (mainLayout.Children[0] as StackLayout).Children.Clear();
+            (mainLayout.Children[0] as StackLayout).Children.Add(timerButton);
+            (mainLayout.Children[0] as StackLayout).Children.Add(tempChild[0]);
+            (mainLayout.Children[0] as StackLayout).Children.Add(tempChild[1]);
         }
     }
 }
