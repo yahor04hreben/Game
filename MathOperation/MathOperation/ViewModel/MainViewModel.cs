@@ -58,6 +58,7 @@ namespace MathOperation.ViewModel
             ScoreVIewModel = new ScoreVIewModel() { Points = 0 };
 
             AddCellViewModel.GenerateNumberAfteClickAddButton += GenerateNumber;
+            AddCellViewModel.ClearUndoNewList += CleareUndoList;
             TableViewModel.CheckGoalValue += CheckGoalValue;
             TableViewModel.SetNewTableUndo += SetNewTableForUndo;
             TableViewModel.SetOldTableUndo += SetOldTableForUndo;
@@ -98,9 +99,6 @@ namespace MathOperation.ViewModel
             {
                 if(selectedList.Sum(s => s.Number) == GoalViewModel.Number)
                 {
-                    UndoViewModel.SetEnabled();
-
-                    UndoViewModel.NewGeneratedList.Clear();
                     UndoViewModel.OldAddCell = GoalViewModel.Number;
                     selectedList.ForEach(c => {
                         c.IsVisible = false;
@@ -146,6 +144,12 @@ namespace MathOperation.ViewModel
         {
             var oldTable = sender as CellViewModel[,];
             UndoViewModel.OldTable = oldTable.CopyTable(Row, Column);
+        }
+
+        private void CleareUndoList(object sender, EventArgs args)
+        {
+            if(UndoViewModel.CanClear)
+                UndoViewModel.NewGeneratedList.Clear();
         }
     }
 }

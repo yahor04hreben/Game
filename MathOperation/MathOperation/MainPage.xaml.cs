@@ -227,9 +227,11 @@ namespace MathOperation
         {
             List<CellViewModel> selectedCells = twoList as List<CellViewModel>;
             MainViewModel.SetOldTableForUndo(MainViewModel.TableViewModel.Table, EventArgs.Empty);
+            MainViewModel.UndoViewModel.SetEnabled();
 
-            if(selectedCells != null)
+            if (selectedCells != null)
             {
+                MainViewModel.UndoViewModel.NewGeneratedList.Clear();
                 MainViewModel.UndoViewModel.AddToOldSelectedList(selectedCells);
                 MainViewModel.TableViewModel.RemoveCellAndAddFallLDown(selectedCells, cellHeight);
             }
@@ -278,10 +280,11 @@ namespace MathOperation
 
         private void RemoveChildFromGrid(List<CellViewModel> cellVM)
         {
-            while(cellVM.Count != 0)
+            var tempCellsVM = cellVM.ToList();
+            while(tempCellsVM.Count != 0)
             {
-                grid.Children.Remove(cellVM[0].Button);
-                cellVM.RemoveAt(0);
+                grid.Children.Remove(tempCellsVM[0].Button);
+                tempCellsVM.RemoveAt(0);
             }
         }
 
@@ -401,6 +404,9 @@ namespace MathOperation
         private void FillFullWhiteSpace()
         {
             int count = MainViewModel.TableViewModel.Table.LengthTable(MainViewModel.TableViewModel.Row);
+            MainViewModel.UndoViewModel.NewGeneratedList.Clear();
+            MainViewModel.UndoViewModel.CanClear = false;
+
             while (count < 20)
             {
                 MainViewModel.GenerateNumber(this, EventArgs.Empty);
@@ -488,6 +494,10 @@ namespace MathOperation
                                 c.Color = StaticResources.CellColor;
                                 CreateButton(c, 0, c.Column);
                             }
+
+                            var listToRemove = MainViewModel.UndoViewModel.NewGeneratedList;
+                            RemoveButton(listToRemove);
+
                             MainViewModel.TableViewModel.RaiseTransleteCells(selectedList, cellHeight);
                             MainViewModel.TableViewModel.ReFillTable(selectedList);
                             MainViewModel.Randomizer.MassRandNumbers.AddRange(selectedList.Select(c => c.Number));
@@ -495,6 +505,8 @@ namespace MathOperation
                             MainViewModel.Randomizer.Goal = MainViewModel.UndoViewModel.OldGoal;
 
                             MainViewModel.UndoViewModel.SetUnEnabled();
+                            if (grid.Children.Count == 20)
+                                MainViewModel.AddCellViewModel.SetUnClickableButton();
                         }
                     });
 
@@ -531,6 +543,17 @@ namespace MathOperation
             (mainLayout.Children[0] as StackLayout).Children.Add(timerButton);
             (mainLayout.Children[0] as StackLayout).Children.Add(tempChild[0]);
             (mainLayout.Children[0] as StackLayout).Children.Add(tempChild[1]);
+        }
+
+        private void RemoveButton(List<CellViewModel> cells)
+        {
+            MainViewModel.TableViewModel.RemoveCellFromTable(cells);
+            RemoveChildFromGrid(cells);
+            MainViewModel.Randomizer.RemoveNumberFromMass(cells.Select(c => c.Number).ToList());
+
+            MainViewModel.AddCellViewModel.SetClickableButton();
+            MainViewModel.UndoViewModel.NewGeneratedList.Clear();
+            MainViewModel.UndoViewModel.CanClear = true;
         }
     }
 }

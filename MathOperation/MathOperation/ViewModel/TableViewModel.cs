@@ -201,7 +201,7 @@ namespace MathOperation.ViewModel
             return tempCell;
         }
 
-        private void RemoveCellFromTable(List<CellViewModel> cells)
+        public void RemoveCellFromTable(List<CellViewModel> cells)
         {
             foreach (var cell in cells)
             {
@@ -211,7 +211,9 @@ namespace MathOperation.ViewModel
 
         public void TranslateCellsFromTable(List<CellViewModel> column)
         {
-            Table.ClearColumn(column.First().Column, Row);
+            if(column.Count != 0)
+                Table.ClearColumn(column.First().Column, Row);
+
             column.ForEach(c =>
             {
                 if (!c.IsVisible)

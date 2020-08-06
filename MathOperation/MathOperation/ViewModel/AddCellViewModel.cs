@@ -13,9 +13,16 @@ namespace MathOperation.ViewModel
         private bool _IsClickable;
 
         public event EventHandler GenerateNumberAfteClickAddButton;
+        public event EventHandler ClearUndoNewList;
+
         private void RaiseEventGenerateButton(object obj, EventArgs args)
         {
             GenerateNumberAfteClickAddButton?.Invoke(obj, args);
+        }
+
+        private void RaiseClearUndoNewList(object sender, EventArgs args)
+        {
+            ClearUndoNewList?.Invoke(sender, args);
         }
 
         public bool IsClickable
@@ -87,6 +94,7 @@ namespace MathOperation.ViewModel
                     _ClickOnAddButton = new RelayCommand(
                         obj =>
                         {
+                            RaiseClearUndoNewList(this, EventArgs.Empty);
                             RaiseEventGenerateButton(this, EventArgs.Empty);
                         });
 

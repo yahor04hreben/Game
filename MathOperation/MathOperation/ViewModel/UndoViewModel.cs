@@ -11,6 +11,8 @@ namespace MathOperation.ViewModel
     public class UndoViewModel : AbstractViewModel
     {
         public int OldAddCell { get;  set; }
+
+        public bool CanClear { get; set; }
         public List<CellViewModel> OldSelectedList { get; private set; }
         public List<CellViewModel> NewGeneratedList { get; set; }
         public CellViewModel[,] OldTable { get; set; }
@@ -41,6 +43,7 @@ namespace MathOperation.ViewModel
             OldSelectedList = new List<CellViewModel>();
             NewGeneratedList = new List<CellViewModel>();
             OldTable = oldTable;
+            CanClear = true;
 
             SetUnEnabled();
         }
