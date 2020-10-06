@@ -83,6 +83,14 @@ namespace MathOperation.ViewModel
             IsStoped = false;
         }
 
+        public void ResetTimer()
+        {
+            Seconds = 0;
+            Minutes = 0;
+
+            Stop();
+        }
+
         public string GetTime()
         {
             string secs = Seconds < 10 ? "0" + Seconds.ToString() : Seconds.ToString();

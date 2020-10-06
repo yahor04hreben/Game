@@ -102,6 +102,7 @@ namespace MathOperation.ViewModel
 
         public async void RemoveCellAndAddFallLDown(List<CellViewModel> selectedCells, float cellHeight)
         {
+            SetAllCellVisible();
             selectedCells.Sort((c, j) => c.Row.CompareTo(j.Row));
             selectedCells.Reverse();
             var CellsByColumn = from cell in selectedCells
@@ -112,21 +113,23 @@ namespace MathOperation.ViewModel
             foreach (var cells in CellsByColumn)
             {
                 var columns = Table.GetColumn(cells.Key);
-                bool IsFirstSkip = columns.Where(c => c.SkipRow != 0).Count() == 0;
 
                 var columnRowBefore = columns.Select(c => c.SkipRow).ToList();
-                cells.ForEach(cell => 
-                {
-                    columns.Where(c => c.Row < cell.Row).ForEach(c => c.SkipRow++);
-                });
                 columns.Where(c => cells.FirstOrDefault(newC => c.Index == newC.Index) != null).ForEach(c => c.IsVisible = false);
+
+                int skipepdCount = 0;
+                for(int i = columns.Count - 1; i >= 0; i--)
+                {
+                    if (!columns[i].IsVisible)
+                        skipepdCount++;
+                    else
+                        columns[i].SkipRow += skipepdCount;
+                }
 
                 for(int i = 0; i < columnRowBefore.Count(); i++)
                 {
-                    //if (!IsFirstSkip)
-                        columns[i].Row += columns[i].SkipRow - columnRowBefore.ToList()[i];
-                    //else
-                    //    columns[i].Row += columns[i].SkipRow;
+                    if (columns[i].IsVisible)
+                        columns[i].Row = columns[i].SkipRow;
                 }
                 TranslateCellsFromTable(columns);
                 taskList.AddRange(TranslateCells(columns, cellHeight));
@@ -159,16 +162,12 @@ namespace MathOperation.ViewModel
 
         private CellViewModel CreateCellViewModedel(int number, int i, int j, int skip = 0)
         {
-            int index = -1;
-            if (Table.NotEmpty(Row, Column))
-                index = Table.GetTableAsList(Row, Column).ToList().Where(c => c != null).Max(c => c.Index);
-
             return new CellViewModel()
             {
                 Number = number,
                 Row = i,
                 Column = j,
-                Index = index + 1,
+                Index = StaticResources.index++,
                 Color = StaticResources.CellColor,
                 Size = StaticResources.CellTextSize,
                 SkipRow = skip,
@@ -243,26 +242,41 @@ namespace MathOperation.ViewModel
 
         public void ReFillTable(List<CellViewModel> listOfCell, bool toRemove = false)
         {
-            foreach(var c in listOfCell)
+            var tempList = Table.GetTableAsList(Row, Column).ToList();
+            tempList.AddRange(listOfCell);
+            tempList = tempList.OrderByDescending(c => c.Row).ThenBy(c => c.Column).ToList();
+
+            Table = new CellViewModel[Row, Column];
+            foreach (var c in tempList)
             {
                 if (!toRemove)
                     Table[c.Row, c.Column] = new CellViewModel(c);
                 else
                     Table[c.Row, c.Column] = null;
             }
+
+            //foreach (var column in tempList.GroupBy(c => c.Column))
+            //{
+            //    int skipRow = 0;
+            //    column.ForEach(c =>
+            //    {
+            //        if (c == null)
+            //            skipRow++;
+            //        else
+            //            Raise
+            //    });
+            //}
         }
 
-        public CellViewModel FindItem(int n)
+        public CellViewModel FindItem(int n, List<CellViewModel> listOfSelectedCells)
         {
             for(int i = 0; i < Row; i ++)
                 for(int j = 0; j < Column; j++)
                 {
-                    if (Table[i, j] != null && Table[i, j].Number == n && !Table[i,j].IsSelected)
+                    if (Table[i, j] != null && Table[i, j].Number == n && !listOfSelectedCells.Contains(Table[i,j]))
                     {
-                        Table[i, j].IsSelected = true;
                         return Table[i, j];
                     }
-                        
                 }
 
             return null;
@@ -276,6 +290,16 @@ namespace MathOperation.ViewModel
         public List<CellViewModel> GetTableAsList()
         {
             return Table.GetTableAsList(Row, Column).ToList();
+        }
+
+        public void SetAllCellVisible()
+        {
+            for(int i = 0; i < Row; i++)
+                for(int j = 0; j < Column; j++)
+                {
+                    if (Table[i, j] != null)
+                        Table[i, j].IsVisible = true;
+                }
         }
     }
 }

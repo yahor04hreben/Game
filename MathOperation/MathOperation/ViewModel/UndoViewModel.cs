@@ -95,9 +95,27 @@ namespace MathOperation.ViewModel
 
         public List<CellViewModel> GetOldSelectedList(int Row, int Column)
         {
-            if(OldSelectedList != null)
-                return OldTable.GetTableAsList(Row, Column).ToList().Where(c => c != null).ToList().Where(c => OldSelectedList.FirstOrDefault(oC => oC.Index == c.Index) != null).ToList();
-            return new List<CellViewModel>();
+
+            var newTableList = NewTable.GetTableAsList(Row, Column).Where(c => c != null).ToList();
+            var oldTableList = OldTable.GetTableAsList(Row, Column).Where(c => c != null).ToList();
+
+            var oldSelectedList = oldTableList.Where(c => newTableList.FirstOrDefault(newC => newC.Index == c.Index) == null).ToList();
+            return oldSelectedList;
+
+
+            //if(OldSelectedList != null)
+            //{
+            //    var tempList = OldTable.GetTableAsList(Row, Column).ToList().Where(c => c != null).ToList().Where(c => OldSelectedList.FirstOrDefault(oC => oC.Index == c.Index) != null).ToList();
+            //    tempList.ForEach(c =>
+            //    {
+            //        c.SkipRow = c.Row;
+            //        c.IsVisible = true;
+            //    });
+
+            //    return tempList;
+            //}
+
+            //return new List<CellViewModel>();
         }
     }
 }

@@ -46,6 +46,11 @@ namespace MathOperation.ViewModel
             GenerateListButton?.Invoke(list, eventArgs);
         }
 
+        public void ResetGenerateListButtonEvent()
+        {
+            GenerateListButton = null;
+        }
+
         public MainViewModel(int number)
         {
             TableViewModel = new TableViewModel();
@@ -99,6 +104,7 @@ namespace MathOperation.ViewModel
             {
                 if(selectedList.Sum(s => s.Number) == GoalViewModel.Number)
                 {
+                    HelpViewModel.ResetCount();
                     UndoViewModel.OldAddCell = GoalViewModel.Number;
                     selectedList.ForEach(c => {
                         c.IsVisible = false;

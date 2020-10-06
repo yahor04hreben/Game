@@ -51,6 +51,44 @@ namespace MathOperation.Helpers
             }
         }
 
+        public static bool IsEqual(this List<int> list1, List<int> list2)
+        {
+            for(int i = 0; i < list1.Count; i++)
+            {
+                if (list1[i] != list2[i])
+                    return false;
+            }
+
+            return true;
+        }
+        public static bool ContainsList(this List<List<int>> goalList, List<int> listCheck)
+        {
+            foreach(var l in goalList)
+            {
+                l.Sort();
+                listCheck.Sort();
+
+                if (l.EqualsList(listCheck))
+                    return true;
+            }
+
+            return false;
+        }
+
+        private static bool EqualsList(this List<int> l1, List<int> l2)
+        {
+            if (l1.Count != l2.Count)
+                return false;
+
+            for(int i = 0; i < l1.Count; i++)
+            {
+                if (l1[i] != l2[i])
+                    return false;
+            }
+
+            return true;
+        }
+
         public static void ClearColumn<T>( this T[,] table, int columnIndex, int Row)
         {
             for (int i = 0; i < Row; i++)

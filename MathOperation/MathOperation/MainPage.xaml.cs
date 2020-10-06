@@ -61,6 +61,7 @@ namespace MathOperation
                     MainViewModel.RefreshMainModel(From, true);
                     ResetTableViewModel();
                     CreateMainView();
+                    SetEventGeneretButtons();
                 }
             }
         }
@@ -84,7 +85,6 @@ namespace MathOperation
             {
                 MainViewModel = new MainViewModel(From);
                 MainViewModel.Randomizer.ChangeFromToNumbers(From, To);
-                MainViewModel.GenerateListButton += GenerateNewButtons;
                 MainViewModel.TableViewModel.RemoveButton += RemoveButton;
             }
             else
@@ -97,8 +97,12 @@ namespace MathOperation
                 MainViewModel.TimerViewModeal.Resume();
                 ResetTableViewModel();
             }
-            
+
+            SetEventGeneretButtons();
+            MainViewModel.HelpViewModel.ClearEvent();
             MainViewModel.HelpViewModel.ClickOnHelpEvent += GetButtonHelp;
+
+
 
             if (grid != null)
                 this.grid = grid;
@@ -121,6 +125,12 @@ namespace MathOperation
             MainViewModel.TableViewModel.ResetSelectedList();
             MainViewModel.TableViewModel.RemoveButton += RemoveButton;
             MainViewModel.TableViewModel.ReFillTable(MainViewModel.TableViewModel.GetTableAsList());
+        }
+
+        private void SetEventGeneretButtons()
+        {
+            MainViewModel.ResetGenerateListButtonEvent();
+            MainViewModel.GenerateListButton += GenerateNewButtons;
         }
 
         private void ParseNumber(string from, string to)
@@ -228,6 +238,7 @@ namespace MathOperation
             List<CellViewModel> selectedCells = twoList as List<CellViewModel>;
             MainViewModel.SetOldTableForUndo(MainViewModel.TableViewModel.Table, EventArgs.Empty);
             MainViewModel.UndoViewModel.SetEnabled();
+            MainViewModel.HelpViewModel.ResetCount();
 
             if (selectedCells != null)
             {
@@ -357,7 +368,6 @@ namespace MathOperation
                 Text = "Undo",
                 Command = ClickUndo
             };
-            //setNumbers.Clicked += SetNumbersButton_Click;
 
             Binding colorBind = new Binding { Source = MainViewModel.UndoViewModel, Path = "Color" };
             setNumbers.SetBinding(Button.BackgroundColorProperty, colorBind);
@@ -377,12 +387,6 @@ namespace MathOperation
             FillGrid();
         }
 
-        private async void SetNumbersButton_Click(object sender, EventArgs e)
-        {
-            MainViewModel.TimerViewModeal.Stop();
-            await Navigation.PushModalAsync(new SetNumbersPage(this));
-        }
-
         private void OnGoalButtonPressed(object sender, EventArgs args)
         {
             stopWatch = new Stopwatch();
@@ -392,7 +396,7 @@ namespace MathOperation
 
         private void OnGoalButtonReleased(object sender, EventArgs args)
         {
-            if(stopWatch.ElapsedMilliseconds > 1000)
+            if(stopWatch.ElapsedMilliseconds > 500)
             {
                 FillFullWhiteSpace();
             }
@@ -414,29 +418,74 @@ namespace MathOperation
             }
         }
         
-        private async void GetButtonHelp(object sender, EventArgs args)
+        private  void GetButtonHelp(object sender, EventArgs args)
         {
             var helpViewModel = sender as HelpViewModel;
             var buttonsViewModel = new List<CellViewModel>();
             var result = new List<List<int>>();
             var buttons = new List<Button>();
 
-            MainViewModel.Randomizer.GenerateCollection(0, result);
-            if(result.Count != 0)
+            if (helpViewModel.Count == -1)
             {
-                result[0].ForEach(n => buttonsViewModel.Add(MainViewModel.TableViewModel.FindItem(n)));
-                buttonsViewModel.ForEach(b => b.IsSelected = false);
+                GetHelpsButton(helpViewModel, result);
+            }
 
+            if(helpViewModel.Count != -1 && helpViewModel.ListOfButtonsHelp.Count != 0)
+            {
+              
+                if (helpViewModel.Count == helpViewModel.ListOfButtonsHelp.Count - 1)
+                {
+                    var addButton = MainViewModel.AddCellViewModel.Button;
+                    AnimationAddButton(addButton);
+                    helpViewModel.ResetCount();
+                    helpViewModel.ClearLists();
+                    return;
+                }
+
+                var helpButtons = helpViewModel.ListOfButtonsHelp[helpViewModel.Count];
+                helpButtons.ForEach(b => buttonsViewModel.Add(MainViewModel.TableViewModel.FindItem(b, buttonsViewModel)));
                 buttonsViewModel.ForEach(b => buttons.Add(b.Button));
+
                 helpViewModel.Buttons = buttons;
+                helpViewModel.IncreaseCount();
+            }
+        }
+
+        private bool IsChangedList(HelpViewModel helpVM)
+        {
+            var oldList = helpVM.ListOfButtonsHelp;
+            var result = new List<List<int>>();
+            MainViewModel.Randomizer.GenerateCollectionForHelp(0, result);
+
+            if (result.Count != oldList.Count)
+                return true;
+
+            for(int i = 0; i < result.Count; i++)
+            {
+                if (!result[i].IsEqual(oldList[i]))
+                    return true;
+            }
+
+            return false;
+        }
+
+        private void GetHelpsButton(HelpViewModel helpVM, List<List<int>> result)
+        {
+            helpVM.IncreaseCount();
+            MainViewModel.Randomizer.GenerateCollectionForHelp(0, result);
+            if (result.Count == 0)
+            {
+                var addButton = MainViewModel.AddCellViewModel.Button;
+                AnimationAddButton(addButton);
+                helpVM.ListOfButtonsHelp.Clear();
+                return;
             }
             else
             {
-                var addButton = MainViewModel.AddCellViewModel.Button;
-
-                await AnimationAddButton(addButton);
+                helpVM.ListOfButtonsHelp = result;
             }
         }
+
 
         private async Task<bool> AnimationAddButton(Button button)
         {
@@ -447,11 +496,10 @@ namespace MathOperation
             await button.ScaleTo(0.9, 200);
             await button.ScaleTo(1, 200);
 
-            lock(locker)
-            {
-                button.BorderColor = Color.Black;
-                button.BorderWidth = 1;
-            }
+
+            button.BorderColor = Color.Black;
+            button.BorderWidth = 1;
+
 
             return true;
         }
@@ -469,37 +517,31 @@ namespace MathOperation
                             var cells = MainViewModel.UndoViewModel.GetTranslateCells(MainViewModel.Row, MainViewModel.Column);
                             
                             var list = new List<CellViewModel>();
+                            var listToRemove = MainViewModel.UndoViewModel.NewGeneratedList;
+                            RemoveButton(listToRemove);
 
-                            foreach(var d in cells)
-                            {
+                            foreach (var d in cells)
+                             {
                                 var cell = d.Key;
                                 cell.SkipRow += d.Value;
                                 cell.Row += d.Value;
-                                list.Add(cell);
-                            }
+                                 list.Add(cell);
+                             }
                             MainViewModel.TableViewModel.RaiseTransleteCells(list, cellHeight);
-                            MainViewModel.TableViewModel.ReFillTable(cells.Keys.ToList());
 
                             var selectedList = MainViewModel.UndoViewModel.GetOldSelectedList(MainViewModel.Row, MainViewModel.Column);
-                            if(selectedList.Count == 0 && MainViewModel.UndoViewModel.OldSelectedList.Count != 0)
-                            {
-                                var tempList = MainViewModel.UndoViewModel.OldSelectedList;
-                                RemoveChildFromGrid(tempList);
-                                MainViewModel.TableViewModel.ReFillTable(tempList, true);
-                            }
-
                             foreach (var c in selectedList)
                             {
                                 c.IsVisible = true;
                                 c.Color = StaticResources.CellColor;
-                                CreateButton(c, 0, c.Column);
+                                 CreateButton(c, 0, c.Column);
                             }
 
-                            var listToRemove = MainViewModel.UndoViewModel.NewGeneratedList;
-                            RemoveButton(listToRemove);
+                            var cellsToAdd = new List<CellViewModel>(selectedList);
+                            cellsToAdd.AddRange(cells.Keys.ToList());
 
-                            MainViewModel.TableViewModel.RaiseTransleteCells(selectedList, cellHeight);
-                            MainViewModel.TableViewModel.ReFillTable(selectedList);
+                            MainViewModel.TableViewModel.RaiseTransleteCells(cellsToAdd, cellHeight);
+                            MainViewModel.TableViewModel.ReFillTable(cellsToAdd);
                             MainViewModel.Randomizer.MassRandNumbers.AddRange(selectedList.Select(c => c.Number));
                             MainViewModel.GoalViewModel.Number = MainViewModel.UndoViewModel.OldGoal;
                             MainViewModel.Randomizer.Goal = MainViewModel.UndoViewModel.OldGoal;
@@ -527,7 +569,7 @@ namespace MathOperation
                 if (_ClickOnTimerCommand == null)
                     _ClickOnTimerCommand = new RelayCommand(obj =>
                     {
-                        Navigation.PushAsync(new MenuPage(timerButton, MainViewModel, grid, MainViewModel.Randomizer.Goal));
+                        Navigation.PushAsync(new MenuPage(timerButton, MainViewModel, grid, MainViewModel.Randomizer.Goal) { IsPaused = true});
                         MainViewModel.TimerViewModeal.Stop();
                         ReFillMinorLatoutChildren();
                     });
@@ -547,9 +589,18 @@ namespace MathOperation
 
         private void RemoveButton(List<CellViewModel> cells)
         {
+            //var groupCells = cells.GroupBy(c => c.Column);
+            //foreach(var column in groupCells)
+            //{
+            //    MainViewModel.TableViewModel.TranslateCellsFromTable
+            //}
+
             MainViewModel.TableViewModel.RemoveCellFromTable(cells);
             RemoveChildFromGrid(cells);
             MainViewModel.Randomizer.RemoveNumberFromMass(cells.Select(c => c.Number).ToList());
+
+            if (cells.Count != 0)
+                MainViewModel.UndoViewModel.OldSelectedList.Clear();
 
             MainViewModel.AddCellViewModel.SetClickableButton();
             MainViewModel.UndoViewModel.NewGeneratedList.Clear();

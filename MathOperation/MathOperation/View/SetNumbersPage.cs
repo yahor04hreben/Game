@@ -10,10 +10,10 @@ namespace MathOperation.View
 {
     public class SetNumbersPage : ContentPage
     {
-        private MainPage page;
+        private MenuPage page;
         Frame frame = null;
-        private string From = String.Empty;
-        private string To = string.Empty;
+        private int From;
+        private int To;
 
         private Entry fromText;
         private Entry toText;
@@ -35,7 +35,9 @@ namespace MathOperation.View
                 OnPropertyChanged("BorderColor");
             }
         }
-        public SetNumbersPage(MainPage page)
+
+        public SetNumbersPage() : this(null) { }
+        public SetNumbersPage(MenuPage page)
         {
             this.page = page;
             BorderColor = Color.Red;
@@ -173,7 +175,6 @@ namespace MathOperation.View
 
         private async void ClickOnCancel(object sender, EventArgs e)
         {
-            page.MainViewModel.TimerViewModeal.Resume();
             await Navigation.PopModalAsync();
         }
 
@@ -184,10 +185,15 @@ namespace MathOperation.View
 
             if (resultFrom && resultTo)
             {
-                if (Int32.Parse(fromText.Text) >= Int32.Parse(toText.Text))
-                    CreateErrorLabel();
-                else
-                    await Navigation.PushModalAsync(new MainPage(fromText.Text, toText.Text, page.MainViewModel, page.timerButton, page.grid));
+                if (Int32.TryParse(fromText.Text, out From) && Int32.TryParse(toText.Text, out To))
+                {
+                    if(From > To)
+                        CreateErrorLabel();
+                    else
+                    {
+                        await Navigation.PushAsync(new MenuPage(page, From, To));
+                    }
+                }
             }   
         }
 

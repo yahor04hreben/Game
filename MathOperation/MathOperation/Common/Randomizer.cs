@@ -100,6 +100,46 @@ namespace MathOperation.Common
             }
         }
 
+        public void GenerateCollectionForHelp(int start, List<List<int>> result, params int[] elem)
+        {
+            int bufsumm = 0;
+            for (int i = 0; i < elem.Length; i++)
+            {
+                bufsumm += elem[i];
+
+                if (bufsumm > Goal)
+                    return;
+            }
+
+            List<int> list = new List<int>();
+            for (int i = start; i < MassRandNumbers.Count && result.Count < 5; i++)
+            {
+                if (bufsumm + MassRandNumbers[i] == Goal)
+                {
+                    for (int k = 0; k < elem.Length; k++)
+                    {
+                        list.Add(elem[k]);
+                    }
+                    list.Add(MassRandNumbers[i]);
+
+                    if(!result.ContainsList(list))
+                        result.Add(list);
+                    return;
+                }
+                else
+                {
+                    int[] buff = new int[elem.Length + 1];
+                    for (int z = 0; z < elem.Length; z++)
+                    {
+                        buff[z] = elem[z];
+                    }
+                    buff[buff.Length - 1] = MassRandNumbers[i];
+
+                    GenerateCollectionForHelp(i + 1, result, buff);
+                }
+            }
+        }
+
         public bool Run(List<List<int>> result)
         {
             GenerateCollection(0, result);

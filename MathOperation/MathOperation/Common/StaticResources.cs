@@ -27,5 +27,7 @@ namespace MathOperation.Common
 
         public static float Width => (float)(DeviceDisplay.MainDisplayInfo.Width / DeviceDisplay.MainDisplayInfo.Density);
         public static float Height => (float)(DeviceDisplay.MainDisplayInfo.Height / DeviceDisplay.MainDisplayInfo.Density);
+
+        public static int index = 0;
     }
 }

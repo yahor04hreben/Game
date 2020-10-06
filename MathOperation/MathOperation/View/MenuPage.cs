@@ -18,24 +18,69 @@ namespace MathOperation.View
         public StackLayout LayoutForButton { get; private set; }
 
         public MainPage MainPage { get; private set; }
+        public MainViewModel MainViewModel { get; private set; }
 
         public Button TimerButton { get; private set; }
         public Grid Grid { get; private set; }
         public int Goal { get; private set; }
+
+        public int FromNumber { get; set; }
+
+        public int ToNumber { get; set; }
+
+        private bool _IsPaused;
+        public bool IsPaused
+        {
+            get => _IsPaused;
+            set
+            {
+                _IsPaused = value;
+                if (_IsPaused)
+                    ResumeColor = StaticResources.GoalBackgroundColor;
+                else
+                    ResumeColor = StaticResources.AddCellUnClickableColor;
+
+
+            }
+        }
+
+        private Color _ResumeColor;
+        public Color ResumeColor
+        {
+            get => _ResumeColor;
+            set
+            {
+                if(_ResumeColor != value)
+                {
+                    _ResumeColor = value;
+                    OnPropertyChanged("ResumeColor");
+                }
+            }
+        }
+
+        public MenuPage(MenuPage menuPage, int From, int To) : this( menuPage.TimerButton, menuPage.MainViewModel, menuPage.Grid, menuPage.Goal)
+        {
+            this.FromNumber = From;
+            this.ToNumber = To;
+        }
+
         public MenuPage(Button timerButton = null, MainViewModel viewModel = null, Grid grid = null, int goal = -1)
         {
+            IsPaused = false;
             TimerButton = timerButton;
             Grid = grid;
             Goal = goal;
-            MainPage = new MainPage(string.Empty, string.Empty, viewModel, TimerButton);
+            MainViewModel = viewModel;
+            MainPage = new MainPage(string.Empty, string.Empty, MainViewModel, TimerButton);
 
             StartButton = CreateButtonByText("Start");
             SettingButton = CreateButtonByText("Setting");
             CancelButton = CreateButtonByText("Cancel");
-            ResumeButton = CreateButtonByText("Resume");
+            ResumeButton = CreateButtonByText("Resume", true);
 
             StartButton.Clicked += ClickOnStartButton;
             ResumeButton.Clicked += ClickOnResumeButton;
+            SettingButton.Clicked += ClickOnSettingButton;
 
             LayoutForButton = new StackLayout
             {
@@ -66,14 +111,14 @@ namespace MathOperation.View
 
             Content = MainLayout;
             NavigationPage.SetHasNavigationBar(this, false);
+            MainPage.MainViewModel.TimerViewModeal.ResetTimer();
         }
 
-        private Button CreateButtonByText(string text, ImageSource image = null)
+        private Button CreateButtonByText(string text, bool isResumeButton = false)
         {
-            return new Button
+            var btn =  new Button
             {
                 Text = text,
-                BackgroundColor = StaticResources.GoalBackgroundColor,
                 TextColor = Color.White,
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Center,
@@ -81,19 +126,38 @@ namespace MathOperation.View
                 WidthRequest = StaticResources.Width * 0.9,
                 Margin = 5
             };
+
+            if (isResumeButton)
+            {
+                Binding bindingColor = new Binding { Source = this, Path = "ResumeColor" };
+                btn.SetBinding(Button.BackgroundColorProperty, bindingColor);
+            }
+            else
+                btn.BackgroundColor = StaticResources.GoalBackgroundColor;
+
+            return btn;
         }
 
         private async void ClickOnStartButton(object sender, EventArgs args)
         {
             MainPage.MainViewModel.TimerViewModeal.Start();
             MainPage.IsStart = true;
+            MainPage?.MainViewModel?.HelpViewModel?.ResetCount(); 
             await Navigation.PushAsync(MainPage);
         }
 
         private async void ClickOnResumeButton(object sender, EventArgs args)
         {
-            MainPage.MainViewModel.TimerViewModeal.Resume();
-            await Navigation.PushAsync(new MainPage(string.Empty, string.Empty, MainPage.MainViewModel, MainPage.timerButton, Grid, Goal));
+            if(IsPaused)
+            {
+                MainPage.MainViewModel.TimerViewModeal.Resume();
+                await Navigation.PushAsync(new MainPage(string.Empty, string.Empty, MainPage.MainViewModel, MainPage.timerButton, Grid, Goal));
+            }
+        }
+
+        private async void ClickOnSettingButton(object sender, EventArgs args)
+        {
+            await Navigation.PushAsync(new SetNumbersPage(this));
         }
     }
 }
